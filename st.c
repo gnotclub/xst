@@ -336,6 +336,7 @@ static void printsel(const Arg *);
 static void printscreen(const Arg *) ;
 static void toggleprinter(const Arg *);
 static void sendbreak(const Arg *);
+static void externalpipe(const Arg *);
 
 /* Config.h for applying patches and the configuration. */
 #include "config.h"
@@ -2920,6 +2921,62 @@ eschandle(uchar ascii)
 		break;
 	}
 	return 1;
+}
+
+void
+externalpipe(const Arg *arg)
+{
+	int to[2]; /* 0 = read, 1 = write */
+	pid_t child;
+	int n;
+	void (*oldsigpipe)(int);
+	char buf[UTF_SIZ];
+	Glyph *bp, *end;
+
+	if(pipe(to) == -1)
+		return;
+
+	/* sigchld() handles this */
+	switch(child = fork()){
+		case -1:
+			close(to[0]), close(to[1]);
+			return;
+		case 0:
+			/* child */
+			close(to[1]);
+			dup2(to[0], STDIN_FILENO); /* 0<&to */
+			close(to[0]);
+			execvp(
+					"sh",
+					(char *const []){
+						"/bin/sh",
+						"-c",
+						(char *)arg->v,
+						0
+					});
+			exit(127);
+	}
+
+	/* parent */
+	close(to[0]);
+	/* ignore sigpipe for now, in case child exits early */
+	oldsigpipe = signal(SIGPIPE, SIG_IGN);
+
+	for(n = 0; n < term.row; n++){
+		bp = &term.line[n][0];
+		end = &bp[MIN(tlinelen(n), term.col) - 1];
+		if(bp != end || bp->u != ' ')
+			for(; bp <= end; ++bp)
+				if(xwrite(to[1], buf, utf8encode(bp->u, buf)) < 0)
+					break;
+		if(xwrite(to[1], "\n", 1) < 0)
+			break;
+	}
+
+	close(to[1]);
+
+	/* restore */
+	signal(SIGPIPE, oldsigpipe);
 }
 
 void
