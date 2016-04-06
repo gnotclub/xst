@@ -1,3 +1,11 @@
+shit features
+------------
+
+* xresource loading - https://github.com/dcat/st-xresources
+* live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
+* live font switching
+* react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
+
 vt emulation
 ------------
 
