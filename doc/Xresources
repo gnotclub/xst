@@ -1,0 +1,29 @@
+st.font:			-*-fixed-*-*-*-*-10-*-*-*-*-*-*-1
+st.bold_font:			0
+st.background:			#131415
+st.foreground:			#A3BAD0
+st.cursorColor:			#8d9b53
+st.termname:			xterm-256color
+st.shell:			/bin/bash
+st.bellvolume:			100
+st.tabspaces:			8
+st.chscale:			1.0
+st.cwscale:			1.0
+
+st.color0:			#353540
+st.color8:			#545466
+st.color1:			#8c5760
+st.color9:			#b26f7a
+st.color2:			#7b8c58
+st.color10:			#9db270
+st.color3:			#8c6e43
+st.color11:			#b28c55
+st.color4:			#58698c
+st.color12:			#7086b2
+st.color5:			#7b5e7d
+st.color13:			#9c77b2
+st.color6:			#66808c
+st.color14:			#82a2b2
+st.color7:			#8c8b8b
+st.color15:			#b8b8c8
+

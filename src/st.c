@@ -28,6 +28,7 @@
 #include <X11/keysym.h>
 #include <X11/Xft/Xft.h>
 #include <X11/XKBlib.h>
+#include <X11/Xresource.h>
 #include <fontconfig/fontconfig.h>
 #include <wchar.h>
 
@@ -87,6 +88,21 @@ char *argv0;
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
 
+// TODO: https://github.com/dcat/st-xresources/issues/1
+#define XRESOURCE_LOAD_STRING(NAME, DST)                  \
+		XrmGetResource(db, NAME, "String", &type, &ret);  \
+	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+		DST = ret.addr;
+
+#define XRESOURCE_LOAD_INTEGER(NAME, DST)                 \
+		XrmGetResource(db, NAME, "String", &type, &ret);  \
+	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+		DST = strtoul(ret.addr, NULL, 10);
+
+#define XRESOURCE_LOAD_FLOAT(NAME, DST)                   \
+		XrmGetResource(db, NAME, "String", &type, &ret);  \
+	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+		DST = strtof(ret.addr, NULL);
 
 enum glyph_attribute {
 	ATTR_NULL       = 0,
@@ -4398,6 +4414,67 @@ usage(void)
 	    " [stty_args ...]\n", argv0, argv0);
 }
 
+void
+config_init(void)
+{
+	if(!(xw.dpy = XOpenDisplay(NULL)))
+		die("Can't open display\n");
+
+	/* XXX */
+	char *resm;
+	char *type;
+	XrmDatabase db;
+	XrmValue ret;
+
+	XrmInitialize();
+	resm = XResourceManagerString(xw.dpy);
+
+	if (resm != NULL) {
+		db = XrmGetStringDatabase(resm);
+
+		// commenting out (for now) settings that are arrays/can't directly load.
+		// dcat config has one font is why his loads directly.
+		// todo: parse such settings? ie have font delimit on comma.
+
+		//XRESOURCE_LOAD_STRING("st.font", font);
+		XRESOURCE_LOAD_STRING("st.color0", colorname[0]);
+		XRESOURCE_LOAD_STRING("st.color1", colorname[1]);
+		XRESOURCE_LOAD_STRING("st.color2", colorname[2]);
+		XRESOURCE_LOAD_STRING("st.color3", colorname[3]);
+		XRESOURCE_LOAD_STRING("st.color4", colorname[4]);
+		XRESOURCE_LOAD_STRING("st.color5", colorname[5]);
+		XRESOURCE_LOAD_STRING("st.color6", colorname[6]);
+		XRESOURCE_LOAD_STRING("st.color7", colorname[7]);
+		XRESOURCE_LOAD_STRING("st.color8", colorname[8]);
+		XRESOURCE_LOAD_STRING("st.color9", colorname[9]);
+		XRESOURCE_LOAD_STRING("st.color10", colorname[10]);
+		XRESOURCE_LOAD_STRING("st.color11", colorname[11]);
+		XRESOURCE_LOAD_STRING("st.color12", colorname[12]);
+		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
+		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
+		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
+		XRESOURCE_LOAD_STRING("st.background", colorname[256]);
+		XRESOURCE_LOAD_STRING("st.foreground", colorname[257]);
+
+		// out of bounds.
+		//XRESOURCE_LOAD_STRING("st.cursorColor", colorname[258]);
+
+		// these ones are probably safe to just make pointer in config as opposed to current
+		//XRESOURCE_LOAD_STRING("st.termname", termname);
+		//XRESOURCE_LOAD_STRING("st.shell", shell);
+		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
+		XRESOURCE_LOAD_INTEGER("st.actionfps", actionfps);
+		XRESOURCE_LOAD_INTEGER("st.blinktimeout", blinktimeout);
+		XRESOURCE_LOAD_INTEGER("st.bellvolume", bellvolume);
+		XRESOURCE_LOAD_INTEGER("st.tabspaces", tabspaces);
+		// there doesn't appear to be a setting with this here, apparently in contract to prev.
+		// todo: figure out how to disable bold fonts.
+		//XRESOURCE_LOAD_INTEGER("st.bold_font", bold_font);
+		XRESOURCE_LOAD_FLOAT("st.cwscale", cwscale);
+		XRESOURCE_LOAD_FLOAT("st.chscale", chscale);
+	}
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -4460,6 +4537,7 @@ run:
 	}
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
+	config_init();
 	tnew(MAX(cols, 1), MAX(rows, 1));
 	xinit();
 	selinit();
