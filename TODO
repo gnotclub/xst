@@ -1,10 +1,16 @@
-shit features
+shit goals
 ------------
 
 * xresource loading - https://github.com/dcat/st-xresources
 * live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
 * live font switching
 * react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
+* http://st.suckless.org/patches/clipboard (maybe)
+* http://st.suckless.org/patches/externalpipe
+* http://st.suckless.org/patches/delkey
+* http://st.suckless.org/patches/scrollback (maybe)
+* http://st.suckless.org/patches/spoiler
+* http://st.suckless.org/patches/visualbell (maybe)
 
 vt emulation
 ------------
