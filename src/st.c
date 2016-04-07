@@ -4434,7 +4434,7 @@ config_init(void)
 	if (resm != NULL) {
 		db = XrmGetStringDatabase(resm);
 
-		XRESOURCE_LOAD_STRING("st.font", font);
+		//XRESOURCE_LOAD_STRING("st.font", font);
 		XRESOURCE_LOAD_STRING("st.color0", colorname[0]);
 		XRESOURCE_LOAD_STRING("st.color1", colorname[1]);
 		XRESOURCE_LOAD_STRING("st.color2", colorname[2]);
@@ -4451,6 +4451,7 @@ config_init(void)
 		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
 		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
 		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
+		/*
 		XRESOURCE_LOAD_STRING("st.termname", termname);
 		XRESOURCE_LOAD_STRING("st.shell", shell);
 		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
@@ -4462,7 +4463,20 @@ config_init(void)
 		XRESOURCE_LOAD_INTEGER("st.borderpx", borderpx);
 		XRESOURCE_LOAD_FLOAT("st.cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("st.chscale", chscale);
+		*/
+		//XrmDestroyDatabase(db);
 	}
+	XFlush(xw.dpy);
+	XCloseDisplay(xw.dpy);
+}
+
+void
+reload(int sig)
+{
+	config_init();
+	xloadcols();
+	redraw();
+	signal(SIGUSR1, reload);
 }
 
 int
@@ -4528,6 +4542,7 @@ run:
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
 	config_init();
+	signal(SIGUSR1, reload);
 	tnew(MAX(cols, 1), MAX(rows, 1));
 	xinit();
 	selinit();
