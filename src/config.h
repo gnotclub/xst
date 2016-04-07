@@ -37,7 +37,7 @@ static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
 static char *termname = "st-256color";
-static unsigned int tabspaces = 8;
+static unsigned int tabspaces = 4;
 static const char *colorname[] = {
 	"#1e1e1e",
 	"#5f5a60",
