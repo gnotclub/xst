@@ -2,7 +2,7 @@ shit goals
 ------------
 
 * [x] xresource loading - https://github.com/dcat/st-xresources
-	[ ] fallback to *.setting, don't be as strict on st.setting
+	[x] fallback to *.setting, don't be as strict on st.setting
 	[ ] expose more options
 * [x] live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
 * [x] live font switching

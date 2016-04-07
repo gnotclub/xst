@@ -88,19 +88,24 @@ char *argv0;
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
 
-#define XRESOURCE_LOAD_STRING(NAME, DST)                  \
-		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
-	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+
+// TODO: these are redundant.
+#define XRESOURCE_LOAD_STRING(NAME, DST)                           \
+	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret)) \
+		XrmGetResource(xrdb, "*." NAME, "*." NAME, &type, &ret);   \
+	if (ret.addr != NULL && !strncmp("String", type, 64))          \
 		DST = ret.addr;
 
-#define XRESOURCE_LOAD_INTEGER(NAME, DST)                 \
-		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
-	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+#define XRESOURCE_LOAD_INTEGER(NAME, DST)                          \
+	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret)) \
+		XrmGetResource(xrdb, "*." NAME, "*." NAME, &type, &ret);   \
+	if (ret.addr != NULL && !strncmp("String", type, 64))          \
 		DST = strtoul(ret.addr, NULL, 10);
 
-#define XRESOURCE_LOAD_FLOAT(NAME, DST)                   \
-		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
-	if (ret.addr != NULL && !strncmp("String", type, 64)) \
+#define XRESOURCE_LOAD_FLOAT(NAME, DST)                             \
+	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret))  \
+		XrmGetResource(xrdb, "*." NAME, "*." NAME, &type, &ret);    \
+	if (ret.addr != NULL && !strncmp("String", type, 64))           \
 		DST = strtof(ret.addr, NULL);
 
 enum glyph_attribute {
@@ -4435,36 +4440,36 @@ xrdb_load(void)
 	if (xrm != NULL) {
 		xrdb = XrmGetStringDatabase(xrm);
 
-		XRESOURCE_LOAD_STRING("st.font", font);
-		XRESOURCE_LOAD_STRING("st.color0", colorname[0]);
-		XRESOURCE_LOAD_STRING("st.color1", colorname[1]);
-		XRESOURCE_LOAD_STRING("st.color2", colorname[2]);
-		XRESOURCE_LOAD_STRING("st.color3", colorname[3]);
-		XRESOURCE_LOAD_STRING("st.color4", colorname[4]);
-		XRESOURCE_LOAD_STRING("st.color5", colorname[5]);
-		XRESOURCE_LOAD_STRING("st.color6", colorname[6]);
-		XRESOURCE_LOAD_STRING("st.color7", colorname[7]);
-		XRESOURCE_LOAD_STRING("st.color8", colorname[8]);
-		XRESOURCE_LOAD_STRING("st.color9", colorname[9]);
-		XRESOURCE_LOAD_STRING("st.color10", colorname[10]);
-		XRESOURCE_LOAD_STRING("st.color11", colorname[11]);
-		XRESOURCE_LOAD_STRING("st.color12", colorname[12]);
-		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
-		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
-		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
-		XRESOURCE_LOAD_STRING("st.foreground", colorname[256]);
-		XRESOURCE_LOAD_STRING("st.background", colorname[257]);
-		XRESOURCE_LOAD_STRING("st.termname", termname);
-		XRESOURCE_LOAD_STRING("st.shell", shell);
-		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
-		XRESOURCE_LOAD_INTEGER("st.actionfps", actionfps);
-		XRESOURCE_LOAD_INTEGER("st.blinktimeout", blinktimeout);
-		XRESOURCE_LOAD_INTEGER("st.bellvolume", bellvolume);
-		XRESOURCE_LOAD_INTEGER("st.tabspaces", tabspaces);
-		XRESOURCE_LOAD_INTEGER("st.bold_font", bold_font);
-		XRESOURCE_LOAD_INTEGER("st.borderpx", borderpx);
-		XRESOURCE_LOAD_FLOAT("st.cwscale", cwscale);
-		XRESOURCE_LOAD_FLOAT("st.chscale", chscale);
+		XRESOURCE_LOAD_STRING("font", font);
+		XRESOURCE_LOAD_STRING("color0", colorname[0]);
+		XRESOURCE_LOAD_STRING("color1", colorname[1]);
+		XRESOURCE_LOAD_STRING("color2", colorname[2]);
+		XRESOURCE_LOAD_STRING("color3", colorname[3]);
+		XRESOURCE_LOAD_STRING("color4", colorname[4]);
+		XRESOURCE_LOAD_STRING("color5", colorname[5]);
+		XRESOURCE_LOAD_STRING("color6", colorname[6]);
+		XRESOURCE_LOAD_STRING("color7", colorname[7]);
+		XRESOURCE_LOAD_STRING("color8", colorname[8]);
+		XRESOURCE_LOAD_STRING("color9", colorname[9]);
+		XRESOURCE_LOAD_STRING("color10", colorname[10]);
+		XRESOURCE_LOAD_STRING("color11", colorname[11]);
+		XRESOURCE_LOAD_STRING("color12", colorname[12]);
+		XRESOURCE_LOAD_STRING("color13", colorname[13]);
+		XRESOURCE_LOAD_STRING("color14", colorname[14]);
+		XRESOURCE_LOAD_STRING("color15", colorname[15]);
+		XRESOURCE_LOAD_STRING("foreground", colorname[256]);
+		XRESOURCE_LOAD_STRING("background", colorname[257]);
+		XRESOURCE_LOAD_STRING("termname", termname);
+		XRESOURCE_LOAD_STRING("shell", shell);
+		XRESOURCE_LOAD_INTEGER("xfps", xfps);
+		XRESOURCE_LOAD_INTEGER("actionfps", actionfps);
+		XRESOURCE_LOAD_INTEGER("blinktimeout", blinktimeout);
+		XRESOURCE_LOAD_INTEGER("bellvolume", bellvolume);
+		XRESOURCE_LOAD_INTEGER("tabspaces", tabspaces);
+		XRESOURCE_LOAD_INTEGER("bold_font", bold_font);
+		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
+		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
+		XRESOURCE_LOAD_FLOAT("chscale", chscale);
 	}
 	XFlush(dpy);
 }
@@ -4473,11 +4478,17 @@ void
 reload(int sig)
 {
 	xrdb_load();
+
+	// colors, fonts
 	xloadcols();
 	xloadfonts(font, 0);
 
+	// pretend the window just got resized
 	cresize(xw.w, xw.h);
 	ttyresize();
+
+	// force redraw
+	redraw(); redraw();
 
 	signal(SIGUSR1, reload);
 }
