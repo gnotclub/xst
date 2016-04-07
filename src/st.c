@@ -90,17 +90,17 @@ char *argv0;
 
 // TODO: https://github.com/dcat/st-xresources/issues/1
 #define XRESOURCE_LOAD_STRING(NAME, DST)                  \
-		XrmGetResource(db, NAME, "String", &type, &ret);  \
+		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
 	if (ret.addr != NULL && !strncmp("String", type, 64)) \
 		DST = ret.addr;
 
 #define XRESOURCE_LOAD_INTEGER(NAME, DST)                 \
-		XrmGetResource(db, NAME, "String", &type, &ret);  \
+		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
 	if (ret.addr != NULL && !strncmp("String", type, 64)) \
 		DST = strtoul(ret.addr, NULL, 10);
 
 #define XRESOURCE_LOAD_FLOAT(NAME, DST)                   \
-		XrmGetResource(db, NAME, "String", &type, &ret);  \
+		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
 	if (ret.addr != NULL && !strncmp("String", type, 64)) \
 		DST = strtof(ret.addr, NULL);
 
@@ -4419,22 +4419,24 @@ usage(void)
 void
 config_init(void)
 {
-	if(!(xw.dpy = XOpenDisplay(NULL)))
+	/* XXX */
+	// to consider: separating out all xresources with colors/font, as that's all that would be reloaded.
+	char *xrm;
+	char *type;
+	XrmDatabase xrdb;
+	XrmValue ret;
+	Display *dpy;
+
+	if(!(dpy = XOpenDisplay(NULL)))
 		die("Can't open display\n");
 
-	/* XXX */
-	char *resm;
-	char *type;
-	XrmDatabase db;
-	XrmValue ret;
-
 	XrmInitialize();
-	resm = XResourceManagerString(xw.dpy);
+	xrm = XResourceManagerString(dpy);
 
-	if (resm != NULL) {
-		db = XrmGetStringDatabase(resm);
+	if (xrm != NULL) {
+		xrdb = XrmGetStringDatabase(xrm);
 
-		//XRESOURCE_LOAD_STRING("st.font", font);
+		XRESOURCE_LOAD_STRING("st.font", font);
 		XRESOURCE_LOAD_STRING("st.color0", colorname[0]);
 		XRESOURCE_LOAD_STRING("st.color1", colorname[1]);
 		XRESOURCE_LOAD_STRING("st.color2", colorname[2]);
@@ -4451,7 +4453,6 @@ config_init(void)
 		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
 		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
 		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
-		/*
 		XRESOURCE_LOAD_STRING("st.termname", termname);
 		XRESOURCE_LOAD_STRING("st.shell", shell);
 		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
@@ -4463,22 +4464,17 @@ config_init(void)
 		XRESOURCE_LOAD_INTEGER("st.borderpx", borderpx);
 		XRESOURCE_LOAD_FLOAT("st.cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("st.chscale", chscale);
-		*/
-		//XrmDestroyDatabase(db);
 	}
-	XFlush(xw.dpy);
-	XCloseDisplay(xw.dpy);
+	XFlush(dpy);
 }
 
 void
 reload(int sig)
 {
-	// calling this segfaults, but you can still set stuff manually
-	// indicates the issue is in closing out? maybe use own dpy above
+	config_init();
 
-	//config_init();
-	colorname[0] = "#000000";
 	xloadcols();
+	xloadfonts(font, 0);
 
 	// called twice intentionally (else doesn't take effect until window is focused)
 	redraw(); redraw();

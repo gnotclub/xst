@@ -2,8 +2,8 @@ shit goals
 ------------
 
 * [x] xresource loading - https://github.com/dcat/st-xresources
-* [ ] live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
-* [ ] live font switching
+* [x] live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
+* [x] live font switching
 * [x] react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
 * [ ] http://st.suckless.org/patches/clipboard (maybe)
 * [x] http://st.suckless.org/patches/externalpipe
