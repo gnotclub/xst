@@ -88,7 +88,6 @@ char *argv0;
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
 
-// TODO: https://github.com/dcat/st-xresources/issues/1
 #define XRESOURCE_LOAD_STRING(NAME, DST)                  \
 		XrmGetResource(xrdb, NAME, NAME, &type, &ret);  \
 	if (ret.addr != NULL && !strncmp("String", type, 64)) \
@@ -4417,10 +4416,10 @@ usage(void)
 }
 
 void
-config_init(void)
+xrdb_load(void)
 {
 	/* XXX */
-	// to consider: separating out all xresources with colors/font, as that's all that would be reloaded.
+	// TODO - this better -- see if can use xm.dpy sans seg fault.
 	char *xrm;
 	char *type;
 	XrmDatabase xrdb;
@@ -4473,8 +4472,7 @@ config_init(void)
 void
 reload(int sig)
 {
-	config_init();
-
+	xrdb_load();
 	xloadcols();
 	xloadfonts(font, 0);
 
@@ -4545,7 +4543,7 @@ run:
 	}
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
-	config_init();
+	xrdb_load();
 	signal(SIGUSR1, reload);
 	tnew(MAX(cols, 1), MAX(rows, 1));
 	xinit();
@@ -4554,4 +4552,3 @@ run:
 
 	return 0;
 }
-

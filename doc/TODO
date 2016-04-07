@@ -2,27 +2,23 @@ shit goals
 ------------
 
 * [x] xresource loading - https://github.com/dcat/st-xresources
+	[ ] fallback to *.setting, don't be as strict on st.setting
 * [x] live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
 * [x] live font switching
 * [x] react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
-* [ ] http://st.suckless.org/patches/clipboard (maybe)
 * [x] http://st.suckless.org/patches/externalpipe
 	[ ] combine this with a url dmenu binding like in the example
 * [x] http://st.suckless.org/patches/delkey
-* [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [x] http://st.suckless.org/patches/spoiler
-* [ ] http://st.suckless.org/patches/visualbell (maybe)
 * [x] http://st.suckless.org/patches/boldcolor (only took the ability to disable bold fonts)
+* [ ] http://st.suckless.org/patches/visualbell (maybe)
+* [ ] http://st.suckless.org/patches/scrollback (maybe)
+* [ ] http://st.suckless.org/patches/clipboard (maybe)
 
 vt emulation
 ------------
 
 * double-height support
-
-code & interface
-----------------
-
-* add a simple way to do multiplexing
 
 drawing
 -------
