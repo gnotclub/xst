@@ -12,6 +12,7 @@ shit goals
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [x] http://st.suckless.org/patches/spoiler
 * [ ] http://st.suckless.org/patches/visualbell (maybe)
+* [x] http://st.suckless.org/patches/boldcolor (only took the ability to disable bold fonts)
 
 vt emulation
 ------------

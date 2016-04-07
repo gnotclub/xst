@@ -6,7 +6,8 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 2;
+static int borderpx = 20;
+static int bold_font = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -16,7 +17,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char shell[] = "/bin/sh";
+static char *shell = "/bin/sh";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -63,7 +64,7 @@ static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 /* default TERM value */
-static char termname[] = "st-256color";
+static char *termname = "st-256color";
 
 static unsigned int tabspaces = 8;
 
@@ -103,8 +104,8 @@ static const char *colorname[] = {
  */
 static unsigned int defaultfg = 7;
 static unsigned int defaultbg = 0;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultcs = 7;
+static unsigned int defaultrcs = 0;
 
 /*
  * Default shape of cursor

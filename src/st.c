@@ -3441,9 +3441,11 @@ xloadfonts(char *fontstr, double fontsize)
 	FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
 	if (xloadfont(&dc.ifont, pattern))
 		die("st: can't open font %s\n", fontstr);
+	if(bold_font) {
+		FcPatternDel(pattern, FC_WEIGHT);
+		FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
+	}
 
-	FcPatternDel(pattern, FC_WEIGHT);
-	FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
 	if (xloadfont(&dc.ibfont, pattern))
 		die("st: can't open font %s\n", fontstr);
 
@@ -4453,23 +4455,15 @@ config_init(void)
 		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
 		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
 		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
-		XRESOURCE_LOAD_STRING("st.background", colorname[256]);
-		XRESOURCE_LOAD_STRING("st.foreground", colorname[257]);
-
-		// out of bounds.
-		//XRESOURCE_LOAD_STRING("st.cursorColor", colorname[258]);
-
-		// these ones are probably safe to just make pointer in config as opposed to current
-		//XRESOURCE_LOAD_STRING("st.termname", termname);
-		//XRESOURCE_LOAD_STRING("st.shell", shell);
+		XRESOURCE_LOAD_STRING("st.termname", termname);
+		XRESOURCE_LOAD_STRING("st.shell", shell);
 		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
 		XRESOURCE_LOAD_INTEGER("st.actionfps", actionfps);
 		XRESOURCE_LOAD_INTEGER("st.blinktimeout", blinktimeout);
 		XRESOURCE_LOAD_INTEGER("st.bellvolume", bellvolume);
 		XRESOURCE_LOAD_INTEGER("st.tabspaces", tabspaces);
-		// there doesn't appear to be a setting with this here, apparently in contract to prev.
-		// todo: figure out how to disable bold fonts.
-		//XRESOURCE_LOAD_INTEGER("st.bold_font", bold_font);
+		XRESOURCE_LOAD_INTEGER("st.bold_font", bold_font);
+		XRESOURCE_LOAD_INTEGER("st.borderpx", borderpx);
 		XRESOURCE_LOAD_FLOAT("st.cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("st.chscale", chscale);
 	}
