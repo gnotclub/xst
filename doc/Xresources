@@ -1,16 +1,16 @@
 ! These are all possible options, presented with default values.
-st.font:			Liberation Mono:pixelsize=12:antialias=true:autohint=true;
-st.bold_font:		0
-st.borderpx:		10
-st.termname:		xterm-256color
-st.shell:			/bin/sh
-st.bellvolume:		100
-st.xfps:			120
-st.actionfps:		30
-st.blinktimeout:	800
-st.tabspaces:		8
-st.chscale:			1.0
-st.cwscale:			1.0
+st.font:         Liberation Mono:pixelsize=12:antialias=true:autohint=true;
+st.bold_font:    0
+st.borderpx:     10
+st.termname:     xterm-256color
+st.shell:        /bin/sh
+st.bellvolume:   100
+st.xfps:         120
+st.actionfps:    30
+st.blinktimeout: 800
+st.tabspaces:    8
+st.chscale:      1.0
+st.cwscale:      1.0
 
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e
