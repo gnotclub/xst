@@ -12,10 +12,10 @@ shit goals
 * [x] http://st.suckless.org/patches/delkey
 * [x] http://st.suckless.org/patches/spoiler
 * [x] http://st.suckless.org/patches/boldcolor (only took the ability to disable bold fonts)
-* [ ] http://st.suckless.org/patches/visualbell (maybe)
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [x] http://st.suckless.org/patches/clipboard (maybe)
 * [x] consider suppressing more config.h into st.c (did)
+* [ ] keybind to paste from not X clipboard (alt + v?)
 
 vt emulation
 ------------
