@@ -4453,6 +4453,8 @@ config_init(void)
 		XRESOURCE_LOAD_STRING("st.color13", colorname[13]);
 		XRESOURCE_LOAD_STRING("st.color14", colorname[14]);
 		XRESOURCE_LOAD_STRING("st.color15", colorname[15]);
+		XRESOURCE_LOAD_STRING("st.foreground", colorname[256]);
+		XRESOURCE_LOAD_STRING("st.background", colorname[257]);
 		XRESOURCE_LOAD_STRING("st.termname", termname);
 		XRESOURCE_LOAD_STRING("st.shell", shell);
 		XRESOURCE_LOAD_INTEGER("st.xfps", xfps);
