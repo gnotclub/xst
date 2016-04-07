@@ -2,6 +2,11 @@ st - simple terminal
 --------------------
 st is a simple terminal emulator for X which sucks less.
 
+shit is a fork of st that:
+- loads settings from Xresources
+- live-reloads settings from xrdb on USR1 signal
+- has some patches applied. See https://git.io/vVoKK
+
 
 Requirements
 ------------
