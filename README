@@ -1,5 +1,3 @@
-shit - shitty simple terminal
---------------------
 shit is a st fork that:
 - loads settings from Xresources. See https://git.io/vVisW
 - live-reloads settings from xrdb on USR1 signal (like termite)
