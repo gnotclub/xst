@@ -4434,11 +4434,7 @@ config_init(void)
 	if (resm != NULL) {
 		db = XrmGetStringDatabase(resm);
 
-		// commenting out (for now) settings that are arrays/can't directly load.
-		// dcat config has one font is why his loads directly.
-		// todo: parse such settings? ie have font delimit on comma.
-
-		//XRESOURCE_LOAD_STRING("st.font", font);
+		XRESOURCE_LOAD_STRING("st.font", font);
 		XRESOURCE_LOAD_STRING("st.color0", colorname[0]);
 		XRESOURCE_LOAD_STRING("st.color1", colorname[1]);
 		XRESOURCE_LOAD_STRING("st.color2", colorname[2]);
