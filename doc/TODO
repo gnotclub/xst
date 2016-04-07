@@ -3,6 +3,7 @@ shit goals
 
 * [x] xresource loading - https://github.com/dcat/st-xresources
 	[ ] fallback to *.setting, don't be as strict on st.setting
+	[ ] expose more options
 * [x] live color switching - https://github.com/Forkk/nixconf/blob/master/desktop/st-config.h
 * [x] live font switching
 * [x] react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
@@ -14,6 +15,7 @@ shit goals
 * [ ] http://st.suckless.org/patches/visualbell (maybe)
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [ ] http://st.suckless.org/patches/clipboard (maybe)
+* [ ] consider suppressing more config.h into st.c
 
 vt emulation
 ------------

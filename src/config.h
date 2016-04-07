@@ -1,147 +1,94 @@
-/* See LICENSE file for copyright and license details. */
-
-/*
- * appearance
- *
- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
- */
+// ref: http://freedesktop.org/software/fontconfig/fontconfig-user.html
 static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true;";
-static int borderpx = 20;
-static int bold_font = 0;
 
-/*
- * What program is execed by st depends of these precedence rules:
- * 1: program passed with -e
- * 2: utmp option
- * 3: SHELL environment variable
- * 4: value of shell in /etc/passwd
- * 5: value of shell in config.h
- */
+// exec precedence: -e arg, utmp option, SHELL env var, /etc/passwd shell, config.h value.
+// (we override with xresources on start)
 static char *shell = "/bin/sh";
-static char *utmp = NULL;
-static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
-/* identification sequence returned in DA and DECID */
+// identification sequence returned in DA and DECID
 static char vtiden[] = "\033[?6c";
 
-/* Kerning / character bounding-box multipliers */
+// Kerning / character bounding-box multipliers
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
-/*
- * word delimiter string
- *
- * More advanced example: " `'\"()[]{}"
- */
+// work delimter strings. more advanced example : " `'\"()[]{}"
 static char worddelimiters[] = " ";
 
-/* selection timeouts (in milliseconds) */
-static unsigned int doubleclicktimeout = 300;
-static unsigned int tripleclicktimeout = 600;
-
-/* alt screens */
+// alt screens
 static int allowaltscreen = 1;
 
-/* frames per second st should at maximum draw to the screen */
-static unsigned int xfps = 120;
-static unsigned int actionfps = 30;
-
-/*
- * blinking timeout (set to 0 to disable blinking) for the terminal blinking
- * attribute.
- */
+// blinking timeout for terminal blinking (0 disables)
 static unsigned int blinktimeout = 800;
 
-/*
- * thickness of underline and bar cursors
- */
+// thickness of underline and bar cursors
 static unsigned int cursorthickness = 2;
 
-/*
- * bell volume. It must be a value between -100 and 100. Use 0 for disabling
- * it
- */
-static int bellvolume = 0;
+// bell volume. Value between -100 and 100. (0 disables)
+static int bellvolume = 100;
 
-/* default TERM value */
+static unsigned int doubleclicktimeout = 300;
+static unsigned int tripleclicktimeout = 600;
+static char *utmp = NULL;
+static int borderpx = 10;
+static int bold_font = 0;
+static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
+static unsigned int xfps = 120;
+static unsigned int actionfps = 30;
 static char *termname = "st-256color";
-
 static unsigned int tabspaces = 8;
-
-/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
-
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#1e1e1e",
+	"#5f5a60",
+	"#cf6a4c",
+	"#cf6a4c",
+	"#8f9d6a",
+	"#8f9d6a",
+	"#f9ee98",
+	"#f9ee98",
+	"#7587a6",
+	"#7587a6",
+	"#9b859d",
+	"#9b859d",
+	"#afc4db",
+	"#afc4db",
+	"#a7a7a7",
+	"#ffffff",
 
 	[255] = 0,
 
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#000000",
-	"#555555",
+	"#a7a7a7",
+	"#171717",
 };
 
-
-/*
- * Default colors (colorname index)
- * foreground, background, cursor, reverse cursor
- */
+// fg, bg, cursor, reverse cursor (refereces colorname indexes)
 static unsigned int defaultfg = 256;
 static unsigned int defaultbg = 257;
 static unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 257;
 
-/*
- * Default shape of cursor
- * 2: Block ("█")
- * 4: Underline ("_")
- * 6: Bar ("|")
- * 7: Snowman ("☃")
- */
+// 2 4 6 7: █ _ | ☃
 static unsigned int cursorshape = 2;
 
-/*
- * Default colour and shape of the mouse cursor
- */
+// mouse
 static unsigned int mouseshape = XC_xterm;
 static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
-/*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
- */
+// Colors used when the specific fg == defaultfg.
 static unsigned int defaultitalic = 11;
 static unsigned int defaultunderline = 7;
 
-/*
- * Internal mouse shortcuts.
- * Beware that overloading Button1 will disable the selection.
- */
+
+// Internal mouse shortcuts.
+// Beware that overloading Button1 will disable the selection.
 static MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
 	{ Button4,              XK_ANY_MOD,     "\031" },
 	{ Button5,              XK_ANY_MOD,     "\005" },
 };
 
-/* Internal keyboard shortcuts. */
+// Internal keyboard shortcuts.
 #define MODKEY Mod1Mask
 
 static Shortcut shortcuts[] = {
@@ -185,10 +132,9 @@ static Shortcut shortcuts[] = {
  * position for a key.
  */
 
-/*
- * If you want keys other than the X11 function keys (0xFD00 - 0xFFFF)
- * to be mapped below, add them to this array.
- */
+
+// If you want keys other than the X11 function keys (0xFD00 - 0xFFFF)
+// to be mapped below, add them to this array.
 static KeySym mappedkeys[] = { -1 };
 
 /*
@@ -197,17 +143,12 @@ static KeySym mappedkeys[] = { -1 };
  */
 static uint ignoremod = Mod2Mask|XK_SWITCH_MOD;
 
-/*
- * Override mouse-select while mask is active (when MODE_MOUSE is set).
- * Note that if you want to use ShiftMask with selmasks, set this to an other
- * modifier, set to 0 to not use it.
- */
+// Override mouse-select while mask is active (when MODE_MOUSE is set).
+// Note that if you want to use ShiftMask with selmasks, set this to an other
+// modifier, set to 0 to not use it.
 static uint forceselmod = ShiftMask;
 
-/*
- * This is the huge key array which defines all compatibility to the Linux
- * world. Please decide about changes wisely.
- */
+// This is the huge key array which defines all compatibility to the Linux world.
 static Key key[] = {
 	/* keysym           mask            string      appkey appcursor crlf */
 	{ XK_KP_Home,       ShiftMask,      "\033[2J",       0,   -1,    0},
@@ -407,21 +348,10 @@ static Key key[] = {
 	{ XK_F35,           XK_NO_MOD,      "\033[23;5~",    0,    0,    0},
 };
 
-/*
- * Selection types' masks.
- * Use the same masks as usual.
- * Button1Mask is always unset, to make masks match between ButtonPress.
- * ButtonRelease and MotionNotify.
- * If no match is found, regular selection is used.
- */
 static uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
 
-/*
- * Printable characters in ASCII, used to estimate the advance width
- * of single wide characters.
- */
 static char ascii_printable[] =
 	" !\"#$%&'()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
