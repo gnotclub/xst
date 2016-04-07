@@ -14,7 +14,7 @@ shit goals
 * [x] http://st.suckless.org/patches/boldcolor (only took the ability to disable bold fonts)
 * [ ] http://st.suckless.org/patches/visualbell (maybe)
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
-* [ ] http://st.suckless.org/patches/clipboard (maybe)
+* [x] http://st.suckless.org/patches/clipboard (maybe)
 * [x] consider suppressing more config.h into st.c (did)
 
 vt emulation
