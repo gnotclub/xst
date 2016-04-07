@@ -4473,9 +4473,15 @@ config_init(void)
 void
 reload(int sig)
 {
-	config_init();
+	// calling this segfaults, but you can still set stuff manually
+	// indicates the issue is in closing out? maybe use own dpy above
+
+	//config_init();
+	colorname[0] = "#000000";
 	xloadcols();
-	redraw();
+
+	// called twice intentionally (else doesn't take effect until window is focused)
+	redraw(); redraw();
 	signal(SIGUSR1, reload);
 }
 
