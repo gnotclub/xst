@@ -15,7 +15,7 @@ shit goals
 * [ ] http://st.suckless.org/patches/visualbell (maybe)
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [ ] http://st.suckless.org/patches/clipboard (maybe)
-* [ ] consider suppressing more config.h into st.c
+* [x] consider suppressing more config.h into st.c (did)
 
 vt emulation
 ------------
