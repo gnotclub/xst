@@ -1,16 +1,23 @@
 ! These are all possible options, presented with default values.
-st.font:         Liberation Mono:pixelsize=12:antialias=true:autohint=true;
-st.bold_font:    0
-st.borderpx:     10
+! shit will fallback to *.option if st.option is not present.
+! see src/config.h for more information about option meanings.
+
+! These options only take effect on startup.
 st.termname:     xterm-256color
 st.shell:        /bin/sh
-st.bellvolume:   100
+st.tabspaces:    4
+
+! These options can be reloaded live.
+st.font:         Liberation Mono:pixelsize=12:antialias=true:autohint=true;
+st.borderpx:     10
+st.cursorshape:  2
+st.bold_font:    0
 st.xfps:         120
 st.actionfps:    30
-st.blinktimeout: 800
-st.tabspaces:    8
 st.chscale:      1.0
 st.cwscale:      1.0
+st.blinktimeout: 800
+st.bellvolume:   100
 
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e
