@@ -36,7 +36,7 @@ static int bold_font = 0;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
-static char *termname = "st-256color";
+static char *termname = "xterm-256color";
 static unsigned int tabspaces = 4;
 static const char *colorname[] = {
 	"#1e1e1e",
