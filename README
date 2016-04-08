@@ -1,6 +1,7 @@
 shit is a st fork that:
-- loads settings from Xresources. See https://git.io/vVisW
-- live-reloads settings from xrdb on USR1 signal (like termite)
-- has some patches applied. See https://git.io/vVoKK
+- Loads settings from Xresources. See https://git.io/vVisW
+- Live-reloads settings from xrdb on USR1 signal (like termite)
+- Has some patches applied. See https://git.io/vVoKK
+- Is available as an AUR package `shit-git` (binary and man still named st)
 
 st can be found at: http://st.suckless.org/
