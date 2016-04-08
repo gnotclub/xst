@@ -4736,14 +4736,17 @@ reload(int sig)
 
 	// colors, fonts
 	xloadcols();
+	xunloadfonts();
 	xloadfonts(font, 0);
 
 	// pretend the window just got resized
 	cresize(xw.w, xw.h);
 	ttyresize();
 
-	// force redraw
-	redraw(); redraw();
+	redraw();
+
+	// triggers re-render if we're visible.
+	ttywrite("\033[O", 3);
 
 	signal(SIGUSR1, reload);
 }
