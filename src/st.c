@@ -88,21 +88,21 @@ char *argv0;
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
 
-#define XRESOURCE_LOAD_META(NAME, DST)                             \
+#define XRESOURCE_LOAD_META(NAME)                                  \
 	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret)) \
 		XrmGetResource(xrdb, "*." NAME, "*." NAME, &type, &ret);   \
 	if (ret.addr != NULL && !strncmp("String", type, 64))
 
 #define XRESOURCE_LOAD_STRING(NAME, DST) \
-	XRESOURCE_LOAD_META(NAME, DST)       \
+	XRESOURCE_LOAD_META(NAME)            \
 		DST = ret.addr;
 
-#define XRESOURCE_LOAD_INTEGER(NAME, DST) \
-	XRESOURCE_LOAD_META(NAME, DST)        \
+#define XRESOURCE_LOAD_INTEGER(NAME, DST)  \
+	XRESOURCE_LOAD_META(NAME)              \
 		DST = strtoul(ret.addr, NULL, 10);
 
 #define XRESOURCE_LOAD_FLOAT(NAME, DST) \
-	XRESOURCE_LOAD_META(NAME, DST)      \
+	XRESOURCE_LOAD_META(NAME)           \
 		DST = strtof(ret.addr, NULL);
 
 enum glyph_attribute {
