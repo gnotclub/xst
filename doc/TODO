@@ -15,7 +15,8 @@ shit goals
 * [ ] http://st.suckless.org/patches/scrollback (maybe)
 * [x] http://st.suckless.org/patches/clipboard (maybe)
 * [x] consider suppressing more config.h into st.c (did)
-* [ ] keybind to paste from not X clipboard (alt + v?)
+* [x] keybind to paste from not X clipboard (alt + v?)
+	This is done with meta(alt)-shift-v
 
 vt emulation
 ------------
