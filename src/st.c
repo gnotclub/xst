@@ -4710,8 +4710,15 @@ xrdb_load(void)
 		XRESOURCE_LOAD_STRING("color13", colorname[13]);
 		XRESOURCE_LOAD_STRING("color14", colorname[14]);
 		XRESOURCE_LOAD_STRING("color15", colorname[15]);
+		XRESOURCE_LOAD_STRING("color16", colorname[16]);
+		XRESOURCE_LOAD_STRING("color17", colorname[17]);
+		XRESOURCE_LOAD_STRING("color18", colorname[18]);
+		XRESOURCE_LOAD_STRING("color19", colorname[19]);
+		XRESOURCE_LOAD_STRING("color20", colorname[20]);
+		XRESOURCE_LOAD_STRING("color21", colorname[21]);
 		XRESOURCE_LOAD_STRING("foreground", colorname[256]);
 		XRESOURCE_LOAD_STRING("background", colorname[257]);
+
 		XRESOURCE_LOAD_STRING("termname", termname);
 		XRESOURCE_LOAD_STRING("shell", shell);
 		XRESOURCE_LOAD_INTEGER("xfps", xfps);

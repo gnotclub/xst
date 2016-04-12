@@ -36,25 +36,31 @@ static int bold_font = 0;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
-static char *termname = "xterm-256color";
+static char *termname = "st-256color";
 static unsigned int tabspaces = 4;
 static const char *colorname[] = {
 	"#1e1e1e",
-	"#5f5a60",
-	"#cf6a4c",
 	"#cf6a4c",
 	"#8f9d6a",
-	"#8f9d6a",
-	"#f9ee98",
 	"#f9ee98",
 	"#7587a6",
-	"#7587a6",
 	"#9b859d",
-	"#9b859d",
-	"#afc4db",
 	"#afc4db",
 	"#a7a7a7",
+	"#5f5a60",
+	"#cf6a4c",
+	"#8f9d6a",
+	"#f9ee98",
+	"#7587a6",
+	"#9b859d",
+	"#afc4db",
 	"#ffffff",
+	"#cda869",
+	"#9b703f",
+	"#323537",
+	"#464b50",
+	"#838184",
+	"#c3c3c3",
 
 	[255] = 0,
 

@@ -3,7 +3,7 @@
 ! see src/config.h for more information about option meanings.
 
 ! These options only take effect on startup.
-st.termname:     xterm-256color
+st.termname:     st-256color
 st.shell:        /bin/sh
 st.tabspaces:    4
 
@@ -19,21 +19,28 @@ st.cwscale:      1.0
 st.blinktimeout: 800
 st.bellvolume:   100
 
+! Defaults taken from base16-twilight colorscheme.
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e
 st.color0:       #1e1e1e
-st.color8:       #5f5a60
 st.color1:       #cf6a4c
-st.color9:       #cf6a4c
 st.color2:       #8f9d6a
-st.color10:      #8f9d6a
 st.color3:       #f9ee98
-st.color11:      #f9ee98
 st.color4:       #7587a6
-st.color12:      #7587a6
 st.color5:       #9b859d
-st.color13:      #9b859d
 st.color6:       #afc4db
-st.color14:      #afc4db
 st.color7:       #a7a7a7
+st.color8:       #5f5a60
+st.color9:       #cf6a4c
+st.color10:      #8f9d6a
+st.color11:      #f9ee98
+st.color12:      #7587a6
+st.color13:      #9b859d
+st.color14:      #afc4db
 st.color15:      #ffffff
+st.color16:      #cda869
+st.color17:      #9b703f
+st.color18:      #323537
+st.color19:      #464b50
+st.color20:      #838184
+st.color21:      #c3c3c3
