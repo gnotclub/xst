@@ -8,7 +8,8 @@ shit goals
 * [x] live font switching
 * [x] react to signal to do the above - http://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html
 * [x] http://st.suckless.org/patches/externalpipe
-	[ ] combine this with a url dmenu binding like in the example
+	[x] combine this with a url dmenu binding like in the example (keybind alt-u) (customizable with dmenu_options)
+	[ ] think/look into more applications of this
 * [x] http://st.suckless.org/patches/delkey
 * [x] http://st.suckless.org/patches/spoiler
 * [x] http://st.suckless.org/patches/boldcolor (only took the ability to disable bold fonts)
