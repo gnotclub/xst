@@ -65,7 +65,7 @@ static const char *colorname[] = {
 	[255] = 0,
 
 	"#a7a7a7",
-	"#171717",
+	"#1e1e1e",
 };
 
 // fg, bg, cursor, reverse cursor (references colorname indexes)
