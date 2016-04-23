@@ -1,5 +1,5 @@
 ! These are all possible options, presented with default values.
-! shit will fallback to *.option if st.option is not present.
+! xst will fallback to *.option if st.option is not present.
 ! see src/config.h for more information about option meanings.
 
 ! These options only take effect on startup.
