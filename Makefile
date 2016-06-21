@@ -69,7 +69,8 @@ install: all
 	@sed "s/VERSION/${VERSION}/g" < doc/st.1 > ${DESTDIR}${MANPREFIX}/man1/st.1
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
 	@echo Please see the README file regarding the terminfo entry of st.
-	@tic -s doc/st.info
+	@mkdir -p ${DESTDIR}/${PREFIX}/share/terminfo
+	@tic -o ${DESTDIR}/${PREFIX}/share/terminfo -s doc/st.info 
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
