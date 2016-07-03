@@ -1,16 +1,14 @@
 xst
 ---
 
-* change aur package name.
-* Implement a daemon client mode like urxvt.
 * expose xresources colors through 256 with a loop and color macro.
 * make startup shell Xresource value if set.
-* fallback to \*setting on xresources as well.
 * expose the ability to set keybinds via Xresources.
-* apply the rest of the boldcolors patch (currently just exposing ability to disbable bold fonts).
+* Implement a daemon client mode like urxvt.
 * make a keybind table of existing binds?
 	* take a closer look at keybinding possiblities.
 * consider the scrollback patch.
+* consider line spacing options.
 
 vt emulation
 ------------

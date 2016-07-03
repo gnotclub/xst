@@ -4,15 +4,15 @@
 
 - Loads settings from Xresources. See https://git.io/vVisW
 - Live-reloads settings from xrdb on USR1 signal (like termite)
-- Is available as an AUR package `shit-git` (binary and man also still named st)
+- Is available as an AUR package `xst-git` (binary and man also still named st)
 - Has the following [st-patches](http://st.suckless.org/patches/) applied:
     - delkey
     - spoiler
     - clipboard
     - externalpipe
-    - boldcolors
+    - boldcolors (only the ability to disable bold)
 
-Thanks too:
+Thanks to:
 
 - [suckless project](http://suckless.org/)
 - [dcat](https://github.com/dcat)
