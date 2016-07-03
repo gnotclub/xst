@@ -1614,6 +1614,9 @@ execsh(void)
 	if ((sh = getenv("SHELL")) == NULL)
 		sh = (pw->pw_shell[0]) ? pw->pw_shell : shell;
 
+	if (shell[0] == '/')
+		sh = shell;
+
 	if (opt_cmd)
 		prog = opt_cmd[0];
 	else if (utmp)
@@ -4677,7 +4680,6 @@ void
 xrdb_load(void)
 {
 	/* XXX */
-	// TODO - this better -- see if can use xm.dpy sans seg fault.
 	char *xrm;
 	char *type;
 	XrmDatabase xrdb;
@@ -4692,7 +4694,6 @@ xrdb_load(void)
 
 	if (xrm != NULL) {
 		xrdb = XrmGetStringDatabase(xrm);
-
 
 		// handling colors here without macros to do via loop.
 		int i = 0;
@@ -4717,8 +4718,6 @@ xrdb_load(void)
 		XRESOURCE_LOAD_STRING("background", colorname[257]);
 		XRESOURCE_LOAD_STRING("font", font);
 		XRESOURCE_LOAD_STRING("termname", termname);
-
-		// note: make flag here to take priority in shell.
 		XRESOURCE_LOAD_STRING("shell", shell);
 
 		XRESOURCE_LOAD_INTEGER("xfps", xfps);

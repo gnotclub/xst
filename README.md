@@ -10,7 +10,7 @@
     - spoiler
     - clipboard
     - externalpipe
-    - boldcolors (only the ability to disable bold)
+    - boldcolors (only the ability to disable bold fonts)
 
 Thanks to:
 

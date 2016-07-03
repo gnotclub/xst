@@ -1,8 +1,9 @@
 // ref: http://freedesktop.org/software/fontconfig/fontconfig-user.html
 static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true;";
 
-// exec precedence: -e arg, utmp option, SHELL env var, /etc/passwd shell, config.h value.
-static char *shell = "/bin/sh";
+// exec precedence: -e arg, utmp option, SHELL env var, /etc/passwd shell
+// if the shell in config/xresources starts with '/' (denoting path), it will take priority.
+static char *shell = " ";
 
 // identification sequence returned in DA and DECID
 static char vtiden[] = "\033[?6c";

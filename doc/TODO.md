@@ -1,7 +1,6 @@
 xst
 ---
 
-* make startup shell Xresource value if set.
 * expose the ability to set keybinds via Xresources.
 * Implement a daemon client mode like urxvt.
 * make a keybind table of existing binds?
