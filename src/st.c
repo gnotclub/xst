@@ -4705,9 +4705,8 @@ xrdb_load(void)
 			{
 				sprintf(loadValue, "%s%d", "*.color", i);
 				if (!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
-				{
-					// TODO here: reset colors that don't have values.
-				}
+					// reset if not found.
+					colorname[i] = NULL;
 			}
 
 			if (ret.addr != NULL && !strncmp("String", type, 64))
