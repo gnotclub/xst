@@ -1,7 +1,6 @@
 xst
 ---
 
-* expose xresources colors through 256 with a loop and color macro.
 * make startup shell Xresource value if set.
 * expose the ability to set keybinds via Xresources.
 * Implement a daemon client mode like urxvt.

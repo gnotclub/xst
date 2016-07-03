@@ -4693,34 +4693,35 @@ xrdb_load(void)
 	if (xrm != NULL) {
 		xrdb = XrmGetStringDatabase(xrm);
 
-		XRESOURCE_LOAD_STRING("font", font);
-		XRESOURCE_LOAD_STRING("color0", colorname[0]);
-		XRESOURCE_LOAD_STRING("color1", colorname[1]);
-		XRESOURCE_LOAD_STRING("color2", colorname[2]);
-		XRESOURCE_LOAD_STRING("color3", colorname[3]);
-		XRESOURCE_LOAD_STRING("color4", colorname[4]);
-		XRESOURCE_LOAD_STRING("color5", colorname[5]);
-		XRESOURCE_LOAD_STRING("color6", colorname[6]);
-		XRESOURCE_LOAD_STRING("color7", colorname[7]);
-		XRESOURCE_LOAD_STRING("color8", colorname[8]);
-		XRESOURCE_LOAD_STRING("color9", colorname[9]);
-		XRESOURCE_LOAD_STRING("color10", colorname[10]);
-		XRESOURCE_LOAD_STRING("color11", colorname[11]);
-		XRESOURCE_LOAD_STRING("color12", colorname[12]);
-		XRESOURCE_LOAD_STRING("color13", colorname[13]);
-		XRESOURCE_LOAD_STRING("color14", colorname[14]);
-		XRESOURCE_LOAD_STRING("color15", colorname[15]);
-		XRESOURCE_LOAD_STRING("color16", colorname[16]);
-		XRESOURCE_LOAD_STRING("color17", colorname[17]);
-		XRESOURCE_LOAD_STRING("color18", colorname[18]);
-		XRESOURCE_LOAD_STRING("color19", colorname[19]);
-		XRESOURCE_LOAD_STRING("color20", colorname[20]);
-		XRESOURCE_LOAD_STRING("color21", colorname[21]);
+
+		// handling colors here without macros to do via loop.
+		int i = 0;
+		char loadValue[11] = "";
+		for (i = 0; i < 256; i++)
+		{
+			sprintf(loadValue, "%s%d", "st.color", i);
+
+			if(!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
+			{
+				sprintf(loadValue, "%s%d", "*.color", i);
+				if (!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
+				{
+					// TODO here: reset colors that don't have values.
+				}
+			}
+
+			if (ret.addr != NULL && !strncmp("String", type, 64))
+				colorname[i] = ret.addr;
+		}
+
 		XRESOURCE_LOAD_STRING("foreground", colorname[256]);
 		XRESOURCE_LOAD_STRING("background", colorname[257]);
-
+		XRESOURCE_LOAD_STRING("font", font);
 		XRESOURCE_LOAD_STRING("termname", termname);
+
+		// note: make flag here to take priority in shell.
 		XRESOURCE_LOAD_STRING("shell", shell);
+
 		XRESOURCE_LOAD_INTEGER("xfps", xfps);
 		XRESOURCE_LOAD_INTEGER("actionfps", actionfps);
 		XRESOURCE_LOAD_INTEGER("blinktimeout", blinktimeout);
