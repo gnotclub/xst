@@ -2,7 +2,6 @@
 static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true;";
 
 // exec precedence: -e arg, utmp option, SHELL env var, /etc/passwd shell, config.h value.
-// (we override with xresources on start)
 static char *shell = "/bin/sh";
 
 // identification sequence returned in DA and DECID

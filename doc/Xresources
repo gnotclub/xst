@@ -5,11 +5,12 @@
 ! These options only take effect on startup.
 st.termname:     st-256color
 st.shell:        /bin/sh
-st.tabspaces:    4
 
-! These options can be reloaded live.
+! The following options options can be reloaded via USR1 signal.
 st.font:         Liberation Mono:pixelsize=12:antialias=true:autohint=true;
 st.borderpx:     10
+st.tabspaces:    4
+! Available cursor values: 2 4 6 7 = █ _ | ☃
 st.cursorshape:  2
 st.bold_font:    0
 st.xfps:         120
