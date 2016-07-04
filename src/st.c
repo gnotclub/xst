@@ -1423,8 +1423,7 @@ selnotify(XEvent *e)
 	 * Deleting the property again tells the selection owner to send the
 	 * next data chunk in the property.
 	 */
-	if (e->type == PropertyNotify)
-		XDeleteProperty(xw.dpy, xw.win, (int)property);
+	XDeleteProperty(xw.dpy, xw.win, (int)property);
 }
 
 void
@@ -1681,9 +1680,9 @@ stty(void)
 		if ((n = strlen(s)) > siz-1)
 			die("stty parameter length too long\n");
 		*q++ = ' ';
-		q = memcpy(q, s, n);
+		memcpy(q, s, n);
 		q += n;
-		siz-= n + 1;
+		siz -= n + 1;
 	}
 	*q = '\0';
 	if (system(cmd) != 0)
@@ -3613,7 +3612,7 @@ xloadfont(Font *f, FcPattern *pattern)
 	FcResult result;
 	XGlyphInfo extents;
 
-	match = FcFontMatch(NULL, pattern, &result);
+	match = XftFontMatch(xw.dpy, xw.scr, pattern, &result);
 	if (!match)
 		return 1;
 
@@ -3678,9 +3677,6 @@ xloadfonts(char *fontstr, double fontsize)
 		}
 		defaultfontsize = usedfontsize;
 	}
-
-	FcConfigSubstitute(0, pattern, FcMatchPattern);
-	FcDefaultSubstitute(pattern);
 
 	if (xloadfont(&dc.font, pattern))
 		die("st: can't open font %s\n", fontstr);
