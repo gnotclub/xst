@@ -4724,6 +4724,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("bold_font", bold_font);
 		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
 		XRESOURCE_LOAD_INTEGER("cursorshape", xw.cursor);
+		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
 	}
