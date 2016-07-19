@@ -6,7 +6,6 @@
 - Live-reloads settings from xrdb on USR1 signal (like termite)
 - Is available as an AUR package `xst-git` (binary and man also still named st)
 - Has the following [st-patches](http://st.suckless.org/patches/) applied:
-    - delkey
     - spoiler
     - clipboard
     - externalpipe
