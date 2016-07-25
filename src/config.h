@@ -26,6 +26,23 @@ static unsigned int cursorthickness = 2;
 /* bell volume. Value between -100 and 100. (0 disables) */
 static int bellvolume = 100;
 
+/*
+ * spaces per tab
+ *
+ * When you are changing this value, don't forget to adapt the »it« value in
+ * the st.info and appropriately install the st.info in the environment where
+ * you use this st version.
+ *
+ *	it#$tabspaces,
+ *
+ * Secondly make sure your kernel is not expanding tabs. When running `stty
+ * -a` »tab0« should appear. You can tell the terminal to not expand tabs by
+ *  running following command:
+ *
+ *	stty tabs
+ */
+static unsigned int tabspaces = 4;
+
 /* other */
 static unsigned int doubleclicktimeout = 300;
 static unsigned int tripleclicktimeout = 600;
@@ -36,7 +53,6 @@ static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
 static char *termname = "st-256color";
-static unsigned int tabspaces = 4;
 static char *colorname[] = {
 	"#1e1e1e",
 	"#cf6a4c",
