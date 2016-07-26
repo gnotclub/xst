@@ -41,7 +41,7 @@ static int bellvolume = 100;
  *
  *	stty tabs
  */
-static unsigned int tabspaces = 4;
+static unsigned int tabspaces = 8;
 
 /* other */
 static unsigned int doubleclicktimeout = 300;
