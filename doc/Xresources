@@ -20,6 +20,8 @@ st.chscale:      1.0
 st.cwscale:      1.0
 st.blinktimeout: 800
 st.bellvolume:   100
+# this is a char that is exposed like so: `printf '\033[z'`
+st.prompt_char:  $
 
 ! Defaults taken from base16-twilight colorscheme.
 st.foreground:   #a7a7a7

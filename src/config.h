@@ -4,6 +4,10 @@ static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true;"
 /* exec precedence: -e arg, utmp option, SHELL env var, /etc/passwd shell */
 static char *shell = "\0";
 
+/* set a char which can be printed with esc code \033[z */
+/* TODO: allow this to accept unicode */
+static char prompt_char = '$';
+
 /* identification sequence returned in DA and DECID */
 static char vtiden[] = "\033[?6c";
 

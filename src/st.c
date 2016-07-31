@@ -97,6 +97,10 @@ char *argv0;
 	XRESOURCE_LOAD_META(NAME)            \
 		DST = ret.addr;
 
+#define XRESOURCE_LOAD_CHAR(NAME, DST) \
+	XRESOURCE_LOAD_META(NAME)            \
+		DST = ret.addr[0];
+
 #define XRESOURCE_LOAD_INTEGER(NAME, DST)  \
 	XRESOURCE_LOAD_META(NAME)              \
 		DST = strtoul(ret.addr, NULL, 10);
@@ -2432,6 +2436,9 @@ csihandle(void)
 		DEFAULT(csiescseq.arg[0], 1);
 		tputtab(-csiescseq.arg[0]);
 		break;
+	case 'z': /* print the prompt_char variable */
+		tputc(prompt_char);
+		break;
 	case 'd': /* VPA -- Move to <row> */
 		DEFAULT(csiescseq.arg[0], 1);
 		tmoveato(term.c.x, csiescseq.arg[0]-1);
@@ -4482,6 +4489,8 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
+
+		XRESOURCE_LOAD_CHAR("prompt_char", prompt_char);
 	}
 	XFlush(dpy);
 }
