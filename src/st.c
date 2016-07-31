@@ -4461,8 +4461,9 @@ xrdb_load(void)
 			{
 				sprintf(loadValue, "%s%d", "*.color", i);
 				if (!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
-					/* reset if not found. */
-					colorname[i] = NULL;
+					/* reset if not found (unless in range for defaults). */
+					if (i > 15)
+						colorname[i] = NULL;
 			}
 
 			if (ret.addr != NULL && !strncmp("String", type, 64))
