@@ -3901,9 +3901,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 
 	/* Reset clip to none. */
 	XftDrawSetClip(xw.draw, 0);
-
-	XCopyArea(xw.dpy, xw.buf, xw.win, dc.gc, winx, winy, width,
-		ceilf((dc.font.ascent + dc.font.descent) * chscale), winx, winy);
 }
 
 void
@@ -4048,6 +4045,8 @@ void
 draw(void)
 {
 	drawregion(0, 0, term.col, term.row);
+	XCopyArea(xw.dpy, xw.buf, xw.win, dc.gc, 0, 0, xw.w,
+			xw.h, 0, 0);
 	XSetForeground(xw.dpy, dc.gc,
 			dc.col[IS_SET(MODE_REVERSE)?
 				defaultfg : defaultbg].pixel);
@@ -4290,10 +4289,6 @@ cresize(int width, int height)
 
 	col = (xw.w - 2 * borderpx) / xw.cw;
 	row = (xw.h - 2 * borderpx) / xw.ch;
-
-	/* TODO here: only redraw borders, not whole area. */
-	XCopyArea(xw.dpy, xw.buf, xw.win, dc.gc, 0, 0, xw.w,
-		xw.h, 0, 0);
 
 	tresize(col, row);
 	xresize(col, row);
