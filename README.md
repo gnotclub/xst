@@ -10,6 +10,7 @@
     - clipboard
     - externalpipe
     - boldcolors (only the ability to disable bold fonts)
+    - vertcenter
 
 Thanks to:
 
