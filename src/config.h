@@ -46,6 +46,9 @@ static int bellvolume = 100;
  *	stty tabs
  */
 static unsigned int tabspaces = 8;
+/* bg opacity */
+static int alpha = 0xff;
+
 
 /* other */
 static unsigned int doubleclicktimeout = 300;
@@ -79,6 +82,7 @@ static char *colorname[] = {
 
 	"#a7a7a7",
 	"#1e1e1e",
+	"black",
 };
 
 /* fg, bg, cursor, reverse cursor (references colorname indexes) */

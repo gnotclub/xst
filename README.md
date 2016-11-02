@@ -11,6 +11,7 @@
     - externalpipe
     - boldcolors (only the ability to disable bold fonts)
     - vertcenter
+    - alpha (transparent background)
 
 Thanks to:
 
