@@ -23,6 +23,8 @@ st.bellvolume:   100
 ! this is a char that is exposed like so: `printf '\033[z'`
 st.prompt_char:  $
 
+! opacity==255 means what terminal will be not transparent, 0 - fully transparent
+st.opacity:      255
 ! Defaults taken from base16-twilight colorscheme.
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e
