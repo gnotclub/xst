@@ -90,6 +90,8 @@ char *argv0;
 #define TRUERED(x)		(((x) & 0xff0000) >> 8)
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
+#define TRUE 1
+#define FALSE 0
 
 #define XRESOURCE_LOAD_META(NAME)                                  \
 	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret)) \
@@ -539,6 +541,12 @@ static void (*handler[LASTEvent])(XEvent *) = {
 	[PropertyNotify] = propnotify,
 	[SelectionRequest] = selrequest,
 };
+
+void xrdb_load(void);
+typedef struct {
+	int alpha;
+} XrdbOverrides;
+static XrdbOverrides xrdb_overrides = {FALSE};
 
 /* Globals */
 static DC dc;
@@ -4482,14 +4490,14 @@ run(void)
 void
 usage(void)
 {
-	die("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
-	    " [-n name] [-o file]\n"
-	    "          [-T title] [-t title] [-w windowid]"
-	    " [[-e] command [args ...]]\n"
-	    "       %s [-aiv] [-c class] [-f font] [-g geometry]"
-	    " [-n name] [-o file]\n"
-	    "          [-T title] [-t title] [-w windowid] -l line"
-	    " [stty_args ...]\n", argv0, argv0);
+	die("usage: %s [-aiv] [-A alpha] [-c class] [-f font] [-g geometry]"
+	    " [-n name]\n"
+	    "          [-o file] [-T title] [-t title] [-w windowid]\n"
+	    "          [[-e] command [args ...]]\n"
+	    "       %s [-aiv] [-A alpha] [-c class] [-f font] [-g geometry]"
+	    " [-n name]\n"
+	    "          [-o file] [-T title] [-t title] [-w windowid]\n"
+		"          -l line [stty_args ...]\n", argv0, argv0);
 }
 
 void
@@ -4545,12 +4553,14 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
 		XRESOURCE_LOAD_INTEGER("cursorshape", xw.cursor);
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
-		XRESOURCE_LOAD_INTEGER("opacity", alpha);
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
 
 		XRESOURCE_LOAD_CHAR("prompt_char", prompt_char);
+
+		if (!xrdb_overrides.alpha)
+			XRESOURCE_LOAD_INTEGER("opacity", alpha);
 	}
 	XFlush(dpy);
 }
@@ -4589,6 +4599,10 @@ main(int argc, char *argv[])
 	ARGBEGIN {
 	case 'a':
 		allowaltscreen = 0;
+		break;
+	case 'A':
+		alpha = atoi(EARGF(usage()));
+		xrdb_overrides.alpha = TRUE;
 		break;
 	case 'c':
 		opt_class = EARGF(usage());
