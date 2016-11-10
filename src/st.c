@@ -90,6 +90,7 @@ char *argv0;
 #define TRUERED(x)		(((x) & 0xff0000) >> 8)
 #define TRUEGREEN(x)		(((x) & 0xff00))
 #define TRUEBLUE(x)		(((x) & 0xff) << 8)
+
 #define TRUE 1
 #define FALSE 0
 
@@ -543,10 +544,9 @@ static void (*handler[LASTEvent])(XEvent *) = {
 };
 
 void xrdb_load(void);
-typedef struct {
-	int alpha;
-} XrdbOverrides;
-static XrdbOverrides xrdb_overrides = {FALSE};
+
+/* change it to struct if more overrides will be needed */
+static int xrdb_overrides_alpha = FALSE;
 
 /* Globals */
 static DC dc;
@@ -4559,7 +4559,7 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_CHAR("prompt_char", prompt_char);
 
-		if (!xrdb_overrides.alpha)
+		if (!xrdb_overrides_alpha)
 			XRESOURCE_LOAD_INTEGER("opacity", alpha);
 	}
 	XFlush(dpy);
@@ -4602,7 +4602,7 @@ main(int argc, char *argv[])
 		break;
 	case 'A':
 		alpha = atoi(EARGF(usage()));
-		xrdb_overrides.alpha = TRUE;
+		xrdb_overrides_alpha = TRUE;
 		break;
 	case 'c':
 		opt_class = EARGF(usage());
