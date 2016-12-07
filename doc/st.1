@@ -4,6 +4,8 @@ st \- simple terminal
 .SH SYNOPSIS
 .B st
 .RB [ \-aiv ]
+.RB [ \-A
+.IR alpha ]
 .RB [ \-c
 .IR class ]
 .RB [ \-f
@@ -28,6 +30,8 @@ st \- simple terminal
 .PP
 .B st
 .RB [ \-aiv ]
+.RB [ \-A
+.IR alpha ]
 .RB [ \-c
 .IR class ]
 .RB [ \-f
@@ -54,6 +58,10 @@ is a simple terminal emulator.
 .TP
 .B \-a
 disable alternate screens in terminal
+.TP
+.BI \-A " alpha"
+defines the window opacity (default from "st.opacity" xrdb value or 255).
+Opacity 255 means what terminal will be not transparent, 0 — fully transparent.
 .TP
 .BI \-c " class"
 defines the window class (default $TERM).
