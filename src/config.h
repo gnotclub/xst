@@ -22,12 +22,6 @@ static char worddelimiters[] = " ";
 /* alt screens */
 static int allowaltscreen = 1;
 
-/* blinking timeout for terminal blinking (0 disables) */
-static unsigned int blinktimeout = 800;
-
-/* thickness of underline and bar cursors */
-static unsigned int cursorthickness = 2;
-
 /* bell volume. Value between -100 and 100. (0 disables) */
 static int bellvolume = 100;
 
@@ -94,6 +88,20 @@ static unsigned int defaultrcs = 257;
 
 /* 2 4 6 7: █ _ | ☃ */
 static unsigned int cursorshape = 2;
+
+/* 0: normal blinking
+ * 1: leave cursor border and blink with cursor's background */
+static unsigned int cursorblinkstyle = 0;
+
+/* 0: cursor blinks with a constant interval
+ * 1: blinking cycle resets on key input */
+static unsigned int cursorblinkontype = 1;
+
+/* thickness of underline and bar cursors */
+static unsigned int cursorthickness = 2;
+
+/* blinking timeout for terminal and cursor blinking (0 disables) */
+static unsigned int blinktimeout = 800;
 
 /* mouse (again colors reference colorname indexes) */
 static unsigned int mouseshape = XC_xterm;
