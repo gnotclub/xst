@@ -1,7 +1,7 @@
 # st - simple terminal
 # See LICENSE file for copyright and license details.
 
-VERSION = 0.6
+VERSION = 0.7
 
 # paths
 PREFIX = /usr/local
@@ -70,7 +70,7 @@ install: all
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/st.1
 	@echo Please see the README file regarding the terminfo entry of st.
 	@mkdir -p ${DESTDIR}/${PREFIX}/share/terminfo
-	@tic -o ${DESTDIR}/${PREFIX}/share/terminfo -s doc/st.info 
+	@tic -o ${DESTDIR}/${PREFIX}/share/terminfo -sx doc/st.info 
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
