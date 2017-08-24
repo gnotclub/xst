@@ -83,8 +83,8 @@ static char *colorname[] = {
 
 	"#a7a7a7", 		/* [default] defaultfg */
 	"#1e1e1e",		/* [default] defaultbg */
-	"#ffffff",              /* [default] defaultcs */
-	"#000000",		/* [default] defaultrcs */
+	"#a7a7a7",              /* [default] defaultcs */
+	"#1e1e1e",		/* [default] defaultrcs */
 	"black",
 };
 
