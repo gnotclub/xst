@@ -4786,6 +4786,8 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_STRING("foreground", colorname[256]);
 		XRESOURCE_LOAD_STRING("background", colorname[257]);
+		XRESOURCE_LOAD_STRING("cursorfg", colorname[258]);
+		XRESOURCE_LOAD_STRING("cursorbg", colorname[259]);
 		XRESOURCE_LOAD_STRING("font", font);
 		XRESOURCE_LOAD_STRING("termname", termname);
 		XRESOURCE_LOAD_STRING("shell", shell);
