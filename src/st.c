@@ -4786,6 +4786,18 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_STRING("foreground", colorname[256]);
 		XRESOURCE_LOAD_STRING("background", colorname[257]);
+		XRESOURCE_LOAD_STRING("cursorfg", colorname[258])
+		else {
+		  // this looks confusing because we are chaining off of the if
+		  // in the macro. probably we should be wrapping everything blocks
+		  // so this isn't possible...
+		  defaultcs = defaultfg;
+		}
+		XRESOURCE_LOAD_STRING("reverse-cursor", colorname[259])
+		else {
+		  // see above.
+		  defaultrcs = defaultbg;
+		}
 		XRESOURCE_LOAD_STRING("font", font);
 		XRESOURCE_LOAD_STRING("termname", termname);
 		XRESOURCE_LOAD_STRING("shell", shell);

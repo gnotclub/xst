@@ -81,16 +81,18 @@ static char *colorname[] = {
 
 	[255] = 0,
 
-	"#a7a7a7",
-	"#1e1e1e",
+	"#a7a7a7", 		/* [default] defaultfg */
+	"#1e1e1e",		/* [default] defaultbg */
+	"#a7a7a7",              /* [default] defaultcs */
+	"#1e1e1e",		/* [default] defaultrcs */
 	"black",
 };
 
 /* fg, bg, cursor, reverse cursor (references colorname indexes) */
 static unsigned int defaultfg = 256;
 static unsigned int defaultbg = 257;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultcs = 258;
+static unsigned int defaultrcs = 259;
 
 /* 2 4 6 7: █ _ | ☃ */
 static unsigned int cursorshape = 2;
