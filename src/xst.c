@@ -4571,7 +4571,7 @@ kpress(XEvent *ev)
 {
 	XKeyEvent *e = &ev->xkey;
 	KeySym ksym;
-	char buf[32], *customkey;
+	char buf[128], *customkey;
 	int len;
 	Rune c;
 	Status status;
