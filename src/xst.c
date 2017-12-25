@@ -547,6 +547,8 @@ static void *xmalloc(size_t);
 static void *xrealloc(void *, size_t);
 static char *xstrdup(char *);
 
+static void setpreeditposition();
+
 static void usage(void);
 
 static void (*handler[LASTEvent])(XEvent *) = {
@@ -3803,6 +3805,14 @@ xinit(void)
 	Window parent;
 	pid_t thispid = getpid();
 	XColor xmousefg, xmousebg;
+	XFontSet fontset;
+	XIMStyle ximstyle;
+	XPoint spot;
+	XVaNestedList *pnlist;
+	char **missingcharlist;
+	int nummissingcharlist;
+	char *defstring;
+	char pat[32];
 
 	if (!(xw.dpy = XOpenDisplay(NULL)))
 		die("Can't open display\n");
@@ -3903,9 +3913,30 @@ xinit(void)
 			}
 		}
 	}
-	xw.xic = XCreateIC(xw.xim, XNInputStyle, XIMPreeditNothing
-					   | XIMStatusNothing, XNClientWindow, xw.win,
-					   XNFocusWindow, xw.win, NULL);
+	switch (imstyle) {
+	case OVER_THE_SPOT:
+		ximstyle = (XIMPreeditPosition | XIMStatusNothing);
+		sprintf(pat, "-*-*-*-R-*-*-%d-*-*-*-*-*-*,*", dc.font.height);
+		fontset = XCreateFontSet(xw.dpy, pat, &missingcharlist,
+								 &nummissingcharlist, &defstring);
+		if (missingcharlist)
+			XFreeStringList(missingcharlist);
+		if (!fontset)
+			die("XCreateFontset failed.");
+		spot.x = 0; spot.y = 0;
+		pnlist = XVaCreateNestedList(0, XNFontSet, fontset, XNSpotLocation,
+									  &spot, NULL);
+		break;
+	default:
+		ximstyle = (XIMPreeditNothing | XIMStatusNothing);
+		pnlist = NULL;
+	}
+	xw.xic = XCreateIC(xw.xim, XNInputStyle, ximstyle, XNClientWindow,
+					   xw.win, XNFocusWindow, xw.win,
+					   pnlist ? XNPreeditAttributes : NULL,
+					   pnlist, NULL);
+	if (pnlist)
+		XFree(pnlist);
 	if (xw.xic == NULL)
 		die("XCreateIC failed. Could not obtain input method.\n");
 
@@ -4335,6 +4366,9 @@ xdrawcursor(void)
 				borderpx + (term.c.y + 1) * xw.ch - 1,
 				xw.cw, 1);
 	}
+	if (imstyle == OVER_THE_SPOT &&
+		(oldx != term.c.x || oldy !=term.c.y))
+		setpreeditposition();
 	oldx = curx, oldy = term.c.y;
 }
 
@@ -4860,6 +4894,21 @@ reload(int sig)
 	ttywrite("\033[O", 3);
 
 	signal(SIGUSR1, reload);
+}
+
+void
+setpreeditposition()
+{
+	XVaNestedList   xva_nlist;
+	XPoint          xpoint;
+
+	xpoint.x = borderpx + term.c.x * dc.font.width;
+	xpoint.y = (term.c.y + 1) * dc.font.height;
+
+	xva_nlist = XVaCreateNestedList(0, XNSpotLocation, &xpoint, NULL);
+	XSetICValues(xw.xic, XNPreeditAttributes, xva_nlist, NULL);
+
+	XFree(xva_nlist);
 }
 
 int
