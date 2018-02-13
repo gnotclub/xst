@@ -31,6 +31,8 @@ st.blinktimeout:      800
 st.bellvolume:        100
 ! this is a char that is exposed like so: `printf '\033[z'`
 st.prompt_char:       $
+! This option is can be preedit style. Available values: `root` `overthespot` (Default taken `root`)
+st.imstyle:           root
 
 ! opacity==255 means what terminal will be not transparent, 0 - fully transparent
 st.opacity:      255
