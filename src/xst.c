@@ -120,6 +120,9 @@ char *argv0;
 
 #define ISO14755CMD		"dmenu -w %lu -p codepoint: </dev/null"
 
+#define IMSTYLE_ROOT "root"
+#define IMSTYLE_OVERTHESPOT "overthespot"
+
 enum glyph_attribute {
 	ATTR_NULL       = 0,
 	ATTR_BOLD       = 1 << 0,
@@ -215,11 +218,6 @@ enum selection_type {
 enum selection_snap {
 	SNAP_WORD = 1,
 	SNAP_LINE = 2
-};
-
-enum input_style {
-	ROOT = 0,
-	OVER_THE_SPOT = 1
 };
 
 int cursorblinkstate = 0;
@@ -3913,8 +3911,7 @@ xinit(void)
 			}
 		}
 	}
-	switch (imstyle) {
-	case OVER_THE_SPOT:
+	if (!strncmp(imstyle, IMSTYLE_OVERTHESPOT, 11)) {
 		ximstyle = (XIMPreeditPosition | XIMStatusNothing);
 		sprintf(pat, "-*-*-*-R-*-*-%d-*-*-*-*-*-*,*", dc.font.height);
 		fontset = XCreateFontSet(xw.dpy, pat, &missingcharlist,
@@ -3926,8 +3923,7 @@ xinit(void)
 		spot.x = 0; spot.y = 0;
 		pnlist = XVaCreateNestedList(0, XNFontSet, fontset, XNSpotLocation,
 									  &spot, NULL);
-		break;
-	default:
+	} else {
 		ximstyle = (XIMPreeditNothing | XIMStatusNothing);
 		pnlist = NULL;
 	}
@@ -4366,8 +4362,8 @@ xdrawcursor(void)
 				borderpx + (term.c.y + 1) * xw.ch - 1,
 				xw.cw, 1);
 	}
-	if (imstyle == OVER_THE_SPOT &&
-		(oldx != term.c.x || oldy !=term.c.y))
+	if ((!strncmp(imstyle, IMSTYLE_OVERTHESPOT, 11)) &&
+		(oldx != term.c.x || oldy != term.c.y))
 		setpreeditposition();
 	oldx = curx, oldy = term.c.y;
 }
@@ -4869,7 +4865,8 @@ xrdb_load(void)
 		if (!xrdb_overrides_alpha) {
 			XRESOURCE_LOAD_INTEGER("opacity", alpha);
 		}
-		XRESOURCE_LOAD_INTEGER("imstyle", imstyle);
+		XRESOURCE_LOAD_STRING("imstyle", imstyle);
+		for (char *p = imstyle; *p; ++p) *p = tolower(*p);
 	}
 	XFlush(dpy);
 }
