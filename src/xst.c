@@ -545,6 +545,7 @@ static void *xmalloc(size_t);
 static void *xrealloc(void *, size_t);
 static char *xstrdup(char *);
 
+static int isavailablestyle(XIMStyle);
 static void setpreeditposition();
 
 static void usage(void);
@@ -3911,21 +3912,23 @@ xinit(void)
 			}
 		}
 	}
+	/* default ximstyle (root) */
+	ximstyle = (XIMPreeditNothing | XIMStatusNothing);
+	pnlist = NULL;
 	if (!strncmp(imstyle, IMSTYLE_OVERTHESPOT, 11)) {
 		ximstyle = (XIMPreeditPosition | XIMStatusNothing);
-		sprintf(pat, "-*-*-*-R-*-*-%d-*-*-*-*-*-*,*", dc.font.height);
-		fontset = XCreateFontSet(xw.dpy, pat, &missingcharlist,
-								 &nummissingcharlist, &defstring);
-		if (missingcharlist)
-			XFreeStringList(missingcharlist);
-		if (!fontset)
-			die("XCreateFontset failed.");
-		spot.x = 0; spot.y = 0;
-		pnlist = XVaCreateNestedList(0, XNFontSet, fontset, XNSpotLocation,
-									  &spot, NULL);
-	} else {
-		ximstyle = (XIMPreeditNothing | XIMStatusNothing);
-		pnlist = NULL;
+		if (isavailablestyle(ximstyle)) {
+			sprintf(pat, "-*-*-*-R-*-*-%d-*-*-*-*-*-*,*", dc.font.height);
+			fontset = XCreateFontSet(xw.dpy, pat, &missingcharlist,
+									 &nummissingcharlist, &defstring);
+			if (missingcharlist)
+				XFreeStringList(missingcharlist);
+			if (!fontset)
+				die("XCreateFontset failed.");
+			spot.x = 0; spot.y = 0;
+			pnlist = XVaCreateNestedList(0, XNFontSet, fontset, XNSpotLocation,
+										  &spot, NULL);
+		}
 	}
 	xw.xic = XCreateIC(xw.xim, XNInputStyle, ximstyle, XNClientWindow,
 					   xw.win, XNFocusWindow, xw.win,
@@ -4891,6 +4894,19 @@ reload(int sig)
 	ttywrite("\033[O", 3);
 
 	signal(SIGUSR1, reload);
+}
+
+int
+isavailablestyle(XIMStyle ximstyle)
+{
+	XIMStyles *ximstyles;
+	int i;
+	/* Get available input styles */
+	XGetIMValues(xw.xim, XNQueryInputStyle, &ximstyles, NULL);
+	for (i = 0; i < ximstyles->count_styles; i++)
+		if (ximstyle == ximstyles->supported_styles[i])
+			return TRUE;
+	return FALSE;
 }
 
 void
