@@ -1822,6 +1822,9 @@ kscrolldown(const Arg* a)
 	if (n < 0)
 		n = term.row + n;
 
+	if (n == 0)
+		n = mousescrolllines;
+
 	if (n > term.scr)
 		n = term.scr;
 
@@ -1839,6 +1842,9 @@ kscrollup(const Arg* a)
 
 	if (n < 0)
 		n = term.row + n;
+
+	if (n == 0)
+		n = mousescrolllines;
 
 	if (term.scr <= histsize - n) {
 		term.scr += n;
@@ -4872,6 +4878,8 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
 		XRESOURCE_LOAD_INTEGER("cursorblinkstyle", cursorblinkstyle);
 		XRESOURCE_LOAD_INTEGER("cursorblinkontype", cursorblinkontype);
+
+		XRESOURCE_LOAD_INTEGER("mouseScrollLines", mousescrolllines);
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);

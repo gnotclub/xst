@@ -121,6 +121,8 @@ static unsigned int mousebg = 0;
  */
 static unsigned int defaultattr = 11;
 
+/* Amout of lines scrolled with mouse */
+static int mousescrolllines = 1;
 
 /* Internal mouse shortcuts. */
 /* Beware that overloading Button1 will disable the selection. */
@@ -132,8 +134,8 @@ static MouseShortcut mshortcuts[] = {
 
 static MouseKey mkeys[] = {
 	/* button               mask            function        argument */
-	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  1} },
-	{ Button5,              XK_NO_MOD,      kscrolldown,    {.i =  1} },
+	{ Button4,              XK_NO_MOD,      kscrollup,      {.i =  0} },
+	{ Button5,              XK_NO_MOD,      kscrolldown,    {.i =  0} },
 };
 
 /* Internal keyboard shortcuts. */
@@ -153,7 +155,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
 	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
-  { MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
+	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
 	{ MODKEY,               'u',            externalpipe,   {.v = "xurls | eval dmenu $(dmenu_options) | xargs -r $BROWSER" } },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
