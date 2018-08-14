@@ -3485,9 +3485,17 @@ xloadcols(void)
 
 	/* set alpha value of bg color */
 	if (USE_ARGB) {
+		// X11 uses premultiplied alpha values (i.e. 50% opacity white is
+		// 0x7f7f7f7f, not 0x7fffffff), so multiply color by alpha
 		dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE; //0xcccc;
-		dc.col[defaultbg].pixel &= 0x00111111;
-		dc.col[defaultbg].pixel |= alpha << 24; // 0xcc000000;
+		dc.col[defaultbg].color.red   = (dc.col[defaultbg].color.red   * alpha) / OPAQUE;
+		dc.col[defaultbg].color.green = (dc.col[defaultbg].color.green * alpha) / OPAQUE;
+		dc.col[defaultbg].color.blue  = (dc.col[defaultbg].color.blue  * alpha) / OPAQUE;
+
+		dc.col[defaultbg].pixel =
+			((((dc.col[defaultbg].pixel & 0x00ff00ff) * alpha) / OPAQUE) & 0x00ff00ff) |
+			((((dc.col[defaultbg].pixel & 0x0000ff00) * alpha) / OPAQUE) & 0x0000ff00) |
+			alpha << 24;
 	}
 
 	loaded = 1;
