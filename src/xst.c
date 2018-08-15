@@ -4349,7 +4349,7 @@ xsettitle(char *p)
 void
 xresettitle(void)
 {
-	xsettitle(opt_title ? opt_title : "st");
+	xsettitle(opt_title ? opt_title : "xst");
 }
 
 void
