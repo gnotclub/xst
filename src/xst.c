@@ -4827,8 +4827,9 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_CHAR("prompt_char", prompt_char);
 
-		if (!xrdb_overrides_alpha)
+		if (!xrdb_overrides_alpha) {
 			XRESOURCE_LOAD_INTEGER("opacity", alpha);
+		}
 	}
 	XFlush(dpy);
 }
