@@ -35,7 +35,7 @@ static int bellvolume = 100;
  * spaces per tab
  *
  * When you are changing this value, don't forget to adapt the »it« value in
- * the st.info and appropriately install the st.info in the environment where
+ * the xst.info and appropriately install the xst.info in the environment where
  * you use this st version.
  *
  *	it#$tabspaces,
@@ -60,7 +60,7 @@ static int bold_font = 0;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
-static char *termname = "st-256color";
+static char *termname = "xst-256color";
 static char *colorname[] = {
 	"#1e1e1e",
 	"#cf6a4c",
@@ -161,7 +161,7 @@ static Shortcut shortcuts[] = {
 
 
 /*
- * Special keys (change & recompile st.info accordingly)
+ * Special keys (change & recompile xst.info accordingly)
  *
  * Mask value:
  * * Use XK_ANY_MOD to match the key no matter modifiers state
