@@ -545,7 +545,7 @@ static void *xmalloc(size_t);
 static void *xrealloc(void *, size_t);
 static char *xstrdup(char *);
 
-static int isavailablestyle(XIMStyle);
+static int isavailableimstyle(XIMStyle);
 static void setpreeditposition();
 
 static void usage(void);
@@ -3917,7 +3917,7 @@ xinit(void)
 	pnlist = NULL;
 	if (!strncmp(imstyle, IMSTYLE_OVERTHESPOT, 11)) {
 		ximstyle = (XIMPreeditPosition | XIMStatusNothing);
-		if (isavailablestyle(ximstyle)) {
+		if (isavailableimstyle(ximstyle)) {
 			sprintf(pat, "-*-*-*-R-*-*-%d-*-*-*-*-*-*,*", dc.font.height);
 			fontset = XCreateFontSet(xw.dpy, pat, &missingcharlist,
 									 &nummissingcharlist, &defstring);
@@ -4897,7 +4897,7 @@ reload(int sig)
 }
 
 int
-isavailablestyle(XIMStyle ximstyle)
+isavailableimstyle(XIMStyle ximstyle)
 {
 	XIMStyles *ximstyles;
 	int i;
