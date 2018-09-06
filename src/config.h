@@ -418,6 +418,8 @@ static Key key[] = {
 	{ XK_F35,           XK_NO_MOD,      "\033[23;5~",    0,    0,    0},
 };
 
+static char *imstyle = "root";
+
 static uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
