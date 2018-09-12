@@ -545,6 +545,8 @@ static void *xmalloc(size_t);
 static void *xrealloc(void *, size_t);
 static char *xstrdup(char *);
 
+static char *strtolower(char *);
+
 static int isavailableimstyle(XIMStyle);
 static void setpreeditposition();
 
@@ -672,6 +674,17 @@ xstrdup(char *s)
 		die("Out of memory\n");
 
 	return s;
+}
+
+char *
+strtolower(char *orig)
+{
+	char lower[strlen(orig)];
+
+	for(int i = 0; orig[i]; i++){
+	  lower[i] = (char)tolower(orig[i]);
+	}
+	return xstrdup(lower);
 }
 
 size_t
@@ -4868,8 +4881,9 @@ xrdb_load(void)
 		if (!xrdb_overrides_alpha) {
 			XRESOURCE_LOAD_INTEGER("opacity", alpha);
 		}
+
 		XRESOURCE_LOAD_STRING("imstyle", imstyle);
-		for (char *p = imstyle; *p; ++p) *p = tolower(*p);
+		imstyle = strtolower(imstyle);
 	}
 	XFlush(dpy);
 }
