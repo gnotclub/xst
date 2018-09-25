@@ -4,8 +4,6 @@
 
 - Loads settings from Xresources. See https://git.io/vVisW
 - Live-reloads settings from xrdb on USR1 signal (like termite)
-- Is available as an AUR package `xst-git` (binary and man also still named st)
-- Is available as a copr package for Fedora`keefle/xst` (binary and man also still named st)
 - Has cursor blinking options
 - Has the following [st-patches](http://st.suckless.org/patches/) applied:
     - spoiler
@@ -14,6 +12,9 @@
     - boldcolors (only the ability to disable bold fonts)
     - vertcenter
     - alpha (transparent background)
+- Available packages:
+    - Arch Linux (AUR): `xst-git`
+    - Fedora (COPR): `keefle/xst`
 
 Thanks to:
 
