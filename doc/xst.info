@@ -189,7 +189,6 @@ xst| simpleterm,
 # Tmux unofficial extensions, see TERMINFO EXTENSIONS in tmux(1)
 	Se,
 	Ss,
-	Tc,
 	Ms=\E]52;%p1%s;%p2%s\007,
 
 xst-256color| simpleterm with 256 colors,
@@ -199,6 +198,14 @@ xst-256color| simpleterm with 256 colors,
 #	Nicked from xterm-256color
 	setab=\E[%?%p1%{8}%<%t4%p1%d%e%p1%{16}%<%t10%p1%{8}%-%d%e48;5;%p1%d%;m,
 	setaf=\E[%?%p1%{8}%<%t3%p1%d%e%p1%{16}%<%t9%p1%{8}%-%d%e38;5;%p1%d%;m,
+
+xst-24bit| simpleterm with true color support,
+	use=xst-256color,
+# Tmux unofficial extension for true color, see TERMINFO EXTENSIONS in tmux(1)
+	Tc,
+# GNU Emacs 24-bit extensions, see https://www.gnu.org/software/emacs/manual/html_node/efaq/Colors-on-a-TTY.html
+	setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+	setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 
 xst-meta| simpleterm with meta key,
 	use=xst,
@@ -210,6 +217,14 @@ xst-meta| simpleterm with meta key,
 
 xst-meta-256color| simpleterm with meta key and 256 colors,
 	use=xst-256color,
+	km,
+	rmm=\E[?1034l,
+	smm=\E[?1034h,
+	rs2=\E[4l\E>\E[?1034h,
+	is2=\E[4l\E>\E[?1034h,
+
+xst-meta-24bit| simpleterm with meta key and true color support,
+	use=xst-24bit,
 	km,
 	rmm=\E[?1034l,
 	smm=\E[?1034h,
