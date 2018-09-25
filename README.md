@@ -12,7 +12,7 @@
     - boldcolors (only the ability to disable bold fonts)
     - vertcenter
     - alpha (transparent background)
-- Available packages:
+- Available in packages:
     - Arch Linux (AUR): `xst-git`
     - Fedora (COPR): `keefle/xst`
 
