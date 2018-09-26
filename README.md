@@ -15,6 +15,7 @@
 - Available in packages:
     - Arch Linux (AUR): `xst-git`
     - Fedora (COPR): `keefle/xst`
+    - Void Linux: `xst`
 
 Thanks to:
 
