@@ -3667,7 +3667,8 @@ xloadfont(Font *f, FcPattern *pattern)
 			if (abs(haveattr - wantattr) > max_bold_weight_infelicity) {
 				f->badweight = 1;
 			}
-			fputs("st: font weight does not match\n", stderr);
+			fprintf(stderr, "st: font weight does not match (%i != %i)\n",
+					haveattr, wantattr);
 		}
 	}
 
