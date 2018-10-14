@@ -55,11 +55,11 @@ static int alpha = 0xff;
 static unsigned int doubleclicktimeout = 300;
 static unsigned int tripleclicktimeout = 600;
 static char *utmp = NULL;
-static int borderpx = 10;
-static int bold_font = 0;
+static unsigned int borderpx = 10;
+static unsigned int bold_font = 0;
 // If available font weight is different from fontconfig's FC_WEIGHT (200),
 // allow infelicity between the weights:
-static int max_bold_weight_infelicity = 20;
+static unsigned int max_bold_weight_infelicity = 20;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
