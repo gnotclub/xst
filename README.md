@@ -15,6 +15,7 @@
 - Available in packages:
     - Arch Linux (AUR): `xst-git`
     - Fedora (COPR): `keefle/xst`
+    - Gentoo (personal overlay): https://framagit.org/3/ebuilds
     - Void Linux: `xst`
 
 Thanks to:
