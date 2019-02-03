@@ -11,6 +11,7 @@
     - externalpipe
     - boldcolors (only the ability to disable bold fonts)
     - vertcenter
+    - hidecursor
     - alpha (transparent background)
 - Available in packages:
     - Arch Linux (AUR): `xst-git`
