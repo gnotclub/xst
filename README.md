@@ -13,6 +13,7 @@
     - vertcenter
     - alpha (transparent background)
 - Available in packages:
+    - ALT Linux (Sisyphus): `xst`
     - Arch Linux (AUR): `xst-git`
     - Fedora (COPR): `keefle/xst`
     - Gentoo (personal overlay): https://framagit.org/3/ebuilds
