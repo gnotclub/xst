@@ -57,6 +57,8 @@ static unsigned int tripleclicktimeout = 600;
 static char *utmp = NULL;
 static unsigned int borderpx = 10;
 static unsigned int bold_font = 0;
+static unsigned int borderless = 0; 
+
 // If available font weight is different from fontconfig's FC_WEIGHT (200),
 // allow infelicity between the weights:
 static unsigned int max_bold_weight_infelicity = 20;

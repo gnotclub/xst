@@ -220,6 +220,17 @@ enum selection_snap {
 	SNAP_LINE = 2
 };
 
+enum motif_wm {
+	MWM_HINTS_FUNCTIONS	= (1L << 0),
+	MWM_HINTS_DECORATIONS	= (1L << 1),
+	MWM_FUNC_ALL		= (1L << 0),
+	MWM_FUNC_RESIZE		= (1L << 1),
+	MWM_FUNC_MOVE		= (1L << 2),
+	MWM_FUNC_MINIMIZE	= (1L << 3),
+	MWM_FUNC_MAXIMIZE	= (1L << 4),
+	MMW_FUNC_CLOSE		= (1L << 5),
+};
+
 int cursorblinkstate = 0;
 
 typedef unsigned char uchar;
@@ -419,6 +430,15 @@ typedef struct {
 	GC gc;
 } DC;
 
+/* Motif Window hints */
+typedef struct {
+	unsigned long	flags;
+	unsigned long	functions;
+	unsigned long	decorations;
+	unsigned long	status;
+	long		input_mode;
+} Mwm_hints;
+
 static void die(const char *, ...);
 static void draw(void);
 static void redraw(void);
@@ -520,6 +540,7 @@ static void propnotify(XEvent *);
 static void selnotify(XEvent *);
 static void selclear(XEvent *);
 static void selrequest(XEvent *);
+static void removewindecorations(void);
 
 static void selinit(void);
 static void selnormalize(void);
@@ -3977,6 +3998,9 @@ xinit(void)
 		xmousebg.blue  = 0x0000;
 	}
 
+	if (borderless == 1)
+		removewindecorations();
+
 	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
 
 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
@@ -4876,6 +4900,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("bellvolume", bellvolume);
 		XRESOURCE_LOAD_INTEGER("bold_font", bold_font);
 		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
+		XRESOURCE_LOAD_INTEGER("borderless", borderless);
 		XRESOURCE_LOAD_INTEGER("cursorshape", xw.cursor);
 		cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
@@ -4947,6 +4972,20 @@ setpreeditposition()
 	XSetICValues(xw.xic, XNPreeditAttributes, xva_nlist, NULL);
 
 	XFree(xva_nlist);
+}
+
+/* Use Motif Window Manager hints to disable decorations */
+void
+removewindecorations(void)
+{
+	Mwm_hints	hints;
+	Atom		mwm_hints_property;
+
+	mwm_hints_property = XInternAtom(xw.dpy, "_MOTIF_WM_HINTS", 0);
+	hints.flags = MWM_HINTS_DECORATIONS;
+	hints.decorations = 0;
+	XChangeProperty(xw.dpy, xw.win, mwm_hints_property, mwm_hints_property, 32, PropModeReplace,
+			(unsigned char *)&hints, 5);
 }
 
 int
