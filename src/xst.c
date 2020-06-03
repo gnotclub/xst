@@ -4985,7 +4985,7 @@ removewindecorations(void)
 	hints.flags = MWM_HINTS_DECORATIONS;
 	hints.decorations = 0;
 	XChangeProperty(xw.dpy, xw.win, mwm_hints_property, mwm_hints_property, 32, PropModeReplace,
-			(unsigned char *)&hints, 5);
+			(uchar *)&hints, 5);
 }
 
 int
