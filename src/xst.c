@@ -3998,7 +3998,7 @@ xinit(void)
 		xmousebg.blue  = 0x0000;
 	}
 
-	if (borderless == 1)
+	if (borderless != 0)
 		removewindecorations();
 
 	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
