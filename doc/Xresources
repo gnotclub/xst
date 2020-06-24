@@ -21,6 +21,8 @@ st.cursorblinkontype: 1
 st.bold_font:         0
 st.xfps:              120
 st.actionfps:         30
+! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
+st.borderless:        0
 ! Amount of lines scrolled
 st.mouseScrollLines:  1
 ! Kerning / character bounding-box height multiplier
