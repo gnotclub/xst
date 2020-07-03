@@ -1,0 +1,3 @@
+*.o
+xst
+config.h
