@@ -1,0 +1,37 @@
+** 💊 xst 💊
+
+`xst` is a [[https://st.suckless.org/][st]] fork with some patches applied and other goodies.
+
+*** xst-specific stuff
+
+- Loads settings from Xresources. See [[./.Xresources][the reference file]].
+- Live-reloads settings from xrdb on USR1 signal (like termite)
+- Has cursor blinking options (and can persistently blink while typing)
+
+*** Suckless patches
+
+- [[https://st.suckless.org/patches/spoiler/][spoiler]]
+- [[https://st.suckless.org/patches/clipboard/][clipboard]]
+- [[https://st.suckless.org/patches/externalpipe/][externalpipe]]
+- [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
+- [[https://st.suckless.org/patches/alpha/][alpha]]
+- [[https://st.suckless.org/patches/scrollback/][scrollback]]
+- [[https://st.suckless.org/patches/disable_bold_italic_fonts/][disable bold/italic fonts]]
+
+*** Packages
+
+| distro                    | name/details                   |
+| ALT Linux (Sisyphus)      | =xst=                          |
+| Arch Linux (AUR)          | =xst-git=                      |
+| Fedora (COPR)             | =keefle/xst=                   |
+| Gentoo (personal overlay) | https://framagit.org/3/ebuilds |
+| Void Linux                | =xst=                          |
+
+*** Thanks
+
+- [[http://suckless.org/][suckless project]]
+- [[https://github.com/actionless/][actionless]]
+- [[https://github.com/dcat][dcat]]
+- [[https://github.com/forkk][Forkk]]
+- [[https://github.com/niebieskitrociny/][niebieskitrociny]]
+

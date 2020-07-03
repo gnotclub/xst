@@ -1,0 +1,69 @@
+! These are all possible options, presented with default values.
+! xst will fallback to *.option if st.option is not present.
+! see src/config.h for more information about option meanings.
+
+! --- These options only take effect on startup. ---
+st.termname:     st-256color
+
+! if you do not set shell, precedence is: -e arg, utmp option, SHELL env var, /etc/passwd shell
+st.shell:        /bin/sh
+
+! --- The following options options can be reloaded via USR1 signal. ---
+st.font:              Liberation Mono:pixelsize=12:antialias=true:autohint=true;
+st.borderpx:          10
+! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
+st.cursorshape:       2
+! thickness of underline and bar cursors
+st.cursorthickness:   2
+! 0: normal blinking, 1: leave cursor border and blink with cursor's background
+st.cursorblinkstyle:  0
+! 0: cursor blinks with a constant interval; 1: blinking cycle resets on key input
+st.cursorblinkontype: 1
+st.bold_font:         0
+st.xfps:              120
+st.actionfps:         30
+! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
+st.borderless:        0
+! Amount of lines scrolled
+st.mouseScrollLines:  1
+! Kerning / character bounding-box height multiplier
+st.chscale:           1.0
+! Kerning / character bounding-box width multiplier
+st.cwscale:           1.0
+! blinking timeout for terminal and cursor blinking (0 disables)
+st.blinktimeout:      800
+! bell volume. Value between -100 and 100. (0 disables)
+st.bellvolume:        100
+! this is a char that is exposed with an escape code(so you can reload in place): `printf '\033[z'`
+! TODO: consider removing this
+st.prompt_char:       $
+! This option is can be preedit style. Available values: `root` `overthespot` (Default taken `root`)
+st.imstyle:           root
+! opacity==255 means what terminal will be not transparent, 0 - fully transparent
+st.opacity:      255
+
+! colors -- this is the base16-twilight colorscheme.
+st.foreground:   #a7a7a7
+st.background:   #1e1e1e
+st.color0:       #1e1e1e
+st.color1:       #cf6a4c
+st.color2:       #8f9d6a
+st.color3:       #f9ee98
+st.color4:       #7587a6
+st.color5:       #9b859d
+st.color6:       #afc4db
+st.color7:       #a7a7a7
+st.color8:       #5f5a60
+st.color9:       #cf6a4c
+st.color10:      #8f9d6a
+st.color11:      #f9ee98
+st.color12:      #7587a6
+st.color13:      #9b859d
+st.color14:      #afc4db
+st.color15:      #ffffff
+st.color16:      #cda869
+st.color17:      #9b703f
+st.color18:      #323537
+st.color19:      #464b50
+st.color20:      #838184
+st.color21:      #c3c3c3
