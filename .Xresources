@@ -3,10 +3,7 @@
 ! see src/config.h for more information about option meanings.
 
 ! --- These options only take effect on startup. ---
-st.termname:     st-256color
-
-! if you do not set shell, precedence is: -e arg, utmp option, SHELL env var, /etc/passwd shell
-st.shell:        /bin/sh
+st.termname:     xst-256color
 
 ! --- The following options options can be reloaded via USR1 signal. ---
 st.font:              Liberation Mono:pixelsize=12:antialias=true:autohint=true;
