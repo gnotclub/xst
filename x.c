@@ -808,11 +808,23 @@ xloadcols(void)
 
 	/* xst: if alpha value is above 1.0, assume it's a number in the 255 range, normalize it */
 	if (alpha > 1.0)
-		alpha = alpha / 255;
+		alpha = alpha / 255.0;
 
-	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
-	dc.col[defaultbg].pixel &= 0x00FFFFFF;
-	dc.col[defaultbg].pixel |= (unsigned char)(0xff * alpha) << 24;
+	if (alpha != 1.0) {
+		int scaled_alpha = ((int)(alpha * 255.0));
+		// X11 uses premultiplied alpha values (i.e. 50% opacity white is
+		// 0x7f7f7f7f, not 0x7fffffff), so multiply color by alpha
+		dc.col[defaultbg].color.alpha = (0xffff * alpha) / 0xff; //0xcccc;
+		dc.col[defaultbg].color.red   = (dc.col[defaultbg].color.red   * scaled_alpha) / 0xff;
+		dc.col[defaultbg].color.green = (dc.col[defaultbg].color.green * scaled_alpha) / 0xff;
+		dc.col[defaultbg].color.blue  = (dc.col[defaultbg].color.blue  * scaled_alpha) / 0xff;
+
+		dc.col[defaultbg].pixel =
+			((((dc.col[defaultbg].pixel & 0x00ff00ff) * scaled_alpha) / 0xff) & 0x00ff00ff) |
+			((((dc.col[defaultbg].pixel & 0x0000ff00) * scaled_alpha) / 0xff) & 0x0000ff00) |
+			scaled_alpha << 24;
+	}
+
 	loaded = 1;
 }
 
