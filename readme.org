@@ -26,7 +26,7 @@
 
 *** Not supported patches
 
-- [[https://st.suckless.org/patches/alpha/][alpha]]: use a compositor such as compton or picom to make xst windows transparent
+- [[https://st.suckless.org/patches/alpha/][alpha]]: use a compositor such as picom to make xst windows transparent
 - [[https://st.suckless.org/patches/hidecursor/][hidecursor]]: use unclutter or an external program to hide your cursor
 
 *** Packages

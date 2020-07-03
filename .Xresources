@@ -5,6 +5,9 @@
 ! --- These options only take effect on startup. ---
 st.termname:     xst-256color
 
+! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
+st.borderless:        0
+
 ! --- The following options options can be reloaded via USR1 signal. ---
 st.font:              Liberation Mono:pixelsize=12:antialias=true:autohint=true;
 
@@ -26,9 +29,6 @@ st.cursorblinkontype: 1
 st.disablebold:         0
 st.disableitalics:         0
 st.disableroman:         0
-
-! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
-st.borderless:        0
 
 ! Amount of lines scrolled
 st.scrollrate:  1
