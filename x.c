@@ -2074,7 +2074,7 @@ xrdb_load(void)
 		  // so this isn't possible...
 		  defaultcs = defaultfg;
 		}
-		XRESOURCE_LOAD_STRING("reverse-cursor", colorname[defaultrcs])
+		XRESOURCE_LOAD_STRING("cursorbg", colorname[defaultrcs])
 		else {
 		  // see above.
 		  defaultrcs = defaultbg;

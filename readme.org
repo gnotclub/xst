@@ -5,6 +5,7 @@
 *** Breaking changes with 0.8.4
 
 - =st.bold_font= option is now inverted; set =st.disablebold= to 1 to remove bold (additionally there is disable{italic,roman})
+- =st.reverse-cursor= renamed to =st.cursorbg=
 
 *** xst-specific stuff
 
