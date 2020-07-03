@@ -13,6 +13,7 @@
 - Loads settings from Xresources. See [[./.Xresources][the reference file]].
 - Live-reloads settings from xrdb on USR1 signal (like termite)
 - Has cursor blinking options (and can persistently blink while typing)
+- A keybind alt+u for launching urls with =dmenu= + =xurls=
 
 *** Suckless patches
 
@@ -20,9 +21,13 @@
 - [[https://st.suckless.org/patches/clipboard/][clipboard]]
 - [[https://st.suckless.org/patches/externalpipe/][externalpipe]]
 - [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
-- [[https://st.suckless.org/patches/alpha/][alpha]]
 - [[https://st.suckless.org/patches/scrollback/][scrollback]]
 - [[https://st.suckless.org/patches/disable_bold_italic_fonts/][disable bold/italic fonts]]
+
+*** Not supported patches
+
+- [[https://st.suckless.org/patches/alpha/][alpha]]: use a compositor such as compton or picom to make st windows transparent
+- [[https://st.suckless.org/patches/hidecursor/][hidecursor]]: use unclutter or an external program to hide your cursor
 
 *** Packages
 

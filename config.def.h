@@ -221,6 +221,7 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,               'u',            externalpipe,   {.v = "xurls | eval dmenu $(dmenu_options) | xargs -r $BROWSER" } },
 };
 
 /*
