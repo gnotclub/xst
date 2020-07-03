@@ -12,6 +12,9 @@ int disablebold = 0;
 int disableitalic = 0;
 int disableroman = 0;
 
+/* mouse scroll rate - 0 means 1*/
+int scrollrate = 0;
+
 static int borderpx = 2;
 
 /*

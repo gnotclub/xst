@@ -2095,12 +2095,12 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("cursorshape", cursorshape);
 
 		/* cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking */
-		/* XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness); */
+		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
 		/* XRESOURCE_LOAD_INTEGER("cursorblinkstyle", cursorblinkstyle); */
 		/* XRESOURCE_LOAD_INTEGER("cursorblinkontype", cursorblinkontype); */
 
 		/* todo: https://github.com/gnotclub/xst/commit/1e82647b0e04077e975679a4b4cf1eb02b04e6bc */
-		/* XRESOURCE_LOAD_INTEGER("mouseScrollLines", mousescrolllines); */
+		XRESOURCE_LOAD_INTEGER("scrollrate", scrollrate);
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
