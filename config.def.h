@@ -15,6 +15,10 @@ int disableroman = 0;
 /* mouse scroll rate - 0 means 1*/
 int scrollrate = 0;
 
+/* If available font weight is different from fontconfig's FC_WEIGHT (200), */
+/* allow infelicity between the weights: */
+int max_bold_weight_infelicity = 20;
+
 static int borderpx = 2;
 
 /*

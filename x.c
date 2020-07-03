@@ -247,11 +247,6 @@ static char *usedfont = NULL;
 static double usedfontsize = 0;
 static double defaultfontsize = 0;
 
-/* declared in config.h */
-extern int disablebold;
-extern int disableitalic;
-extern int disableroman;
-
 static char *opt_alpha = NULL;
 static char *opt_class = NULL;
 static char **opt_cmd  = NULL;
@@ -950,8 +945,11 @@ xloadfont(Font *f, FcPattern *pattern)
 	    XftResultMatch)) {
 		if ((XftPatternGetInteger(f->match->pattern, "weight", 0,
 		    &haveattr) != XftResultMatch) || haveattr != wantattr) {
-			f->badweight = 1;
-			fputs("font weight does not match\n", stderr);
+			if (abs(haveattr - wantattr) > max_bold_weight_infelicity) {
+				f->badweight = 1;
+			}
+			fprintf(stderr, "st: font weight does not match (%i != %i)\n",
+					haveattr, wantattr);
 		}
 	}
 
