@@ -809,6 +809,11 @@ xloadcols(void)
 	/* set alpha value of bg color */
 	if (opt_alpha)
 		alpha = strtof(opt_alpha, NULL);
+
+	/* xst: if alpha value is above 1.0, assume it's a number in the 255 range, normalize it */
+	if (alpha > 1.0)
+		alpha = alpha / 255;
+
 	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
 	dc.col[defaultbg].pixel &= 0x00FFFFFF;
 	dc.col[defaultbg].pixel |= (unsigned char)(0xff * alpha) << 24;
