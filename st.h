@@ -132,4 +132,4 @@ extern int scrollrate;
 extern int disablebold;
 extern int disableitalic;
 extern int disableroman;
-extern int max_bold_weight_infelicity;
+extern unsigned int max_bold_weight_infelicity;
