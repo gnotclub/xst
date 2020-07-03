@@ -7,37 +7,43 @@ st.termname:     xst-256color
 
 ! --- The following options options can be reloaded via USR1 signal. ---
 st.font:              Liberation Mono:pixelsize=12:antialias=true:autohint=true;
+
+! window padding
 st.borderpx:          10
+
 ! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
 st.cursorshape:       2
+
 ! thickness of underline and bar cursors
 st.cursorthickness:   2
+
 ! 0: normal blinking, 1: leave cursor border and blink with cursor's background
 st.cursorblinkstyle:  0
+
 ! 0: cursor blinks with a constant interval; 1: blinking cycle resets on key input
 st.cursorblinkontype: 1
-st.bold_font:         0
-st.xfps:              120
-st.actionfps:         30
+
+st.disablebold:         0
+st.disableitalics:         0
+st.disableroman:         0
+
 ! Set to a non-zero value to disable window decorations (titlebar, etc) and go borderless.
 st.borderless:        0
+
 ! Amount of lines scrolled
 st.scrollrate:  1
+
 ! Kerning / character bounding-box height multiplier
 st.chscale:           1.0
+
 ! Kerning / character bounding-box width multiplier
 st.cwscale:           1.0
+
 ! blinking timeout for terminal and cursor blinking (0 disables)
 st.blinktimeout:      800
+
 ! bell volume. Value between -100 and 100. (0 disables)
 st.bellvolume:        100
-! this is a char that is exposed with an escape code(so you can reload in place): `printf '\033[z'`
-! TODO: consider removing this
-st.prompt_char:       $
-! This option is can be preedit style. Available values: `root` `overthespot` (Default taken `root`)
-st.imstyle:           root
-! opacity==255 means what terminal will be not transparent, 0 - fully transparent
-st.opacity:      255
 
 ! colors -- this is the base16-twilight colorscheme.
 st.foreground:   #a7a7a7

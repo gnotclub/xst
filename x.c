@@ -2059,8 +2059,6 @@ xrdb_load(void)
 		XRESOURCE_LOAD_STRING("font", font);
 		XRESOURCE_LOAD_STRING("termname", termname);
 
-		/* XRESOURCE_LOAD_INTEGER("xfps", xfps); */
-		/* XRESOURCE_LOAD_INTEGER("actionfps", actionfps); */
 		XRESOURCE_LOAD_INTEGER("blinktimeout", blinktimeout);
 		XRESOURCE_LOAD_INTEGER("bellvolume", bellvolume);
 		XRESOURCE_LOAD_INTEGER("disablebold", disablebold);
@@ -2080,11 +2078,6 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
-
-		/* XRESOURCE_LOAD_CHAR("prompt_char", prompt_char); */
-
-		if (!opt_alpha)
-			XRESOURCE_LOAD_FLOAT("opacity", alpha);
 	}
 	XFlush(dpy);
 }
