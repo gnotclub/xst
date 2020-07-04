@@ -1510,13 +1510,18 @@ void
 xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 {
 	Color drawcol;
+	int cursorshouldblink = win.cursor % 2;
 
 	/* remove the old cursor */
 	if (selected(ox, oy))
 		og.mode ^= ATTR_REVERSE;
 	xdrawglyph(og, ox, oy);
 
-	if (IS_SET(MODE_HIDE))
+	if (IS_SET(MODE_HIDE) ||
+	    (cursorshouldblink &&
+	     !cursorblinkstyle &&
+	     cursorblinkstate &&
+	     (IS_SET(MODE_FOCUSED))))
 		return;
 
 	/*
@@ -1546,9 +1551,13 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 	}
 
 	/* draw the new one */
-	if (IS_SET(MODE_FOCUSED)) {
-		switch (win.cursor) {
-		case 7: /* st extension */
+	if (IS_SET(MODE_FOCUSED) &&
+	    ((cursorshouldblink == 0) ||
+	     ((!cursorblinkstyle && 1) || cursorblinkstate)
+	     ))
+		{
+			switch (win.cursor) {
+			case 7: /* st extension */
 			g.u = 0x2603; /* snowman (U+2603) */
 			/* FALLTHROUGH */
 		case 0: /* Blinking Block */
@@ -1968,7 +1977,7 @@ run(void)
 
 		/* idle detected or maxlatency exhausted -> draw */
 		timeout = -1;
-		if (blinktimeout && tattrset(ATTR_BLINK)) {
+		if (blinktimeout && (tattrset(ATTR_BLINK) || (win.cursor % 2))) {
 			timeout = blinktimeout - TIMEDIFF(now, lastblink);
 			if (timeout <= 0) {
 				if (-timeout > blinktimeout) /* start visible */
@@ -1976,11 +1985,17 @@ run(void)
 				win.mode ^= MODE_BLINK;
 				tsetdirtattr(ATTR_BLINK);
 				lastblink = now;
+				if (!cursorblinkontype) {
+					cursorblinkstate = !cursorblinkstate;
+				}
 				timeout = blinktimeout;
 			}
 		}
 
 		draw();
+		if (cursorblinkontype) {
+			cursorblinkstate = !cursorblinkstate;
+		}
 		XFlush(xw.dpy);
 		drawing = 0;
 	}

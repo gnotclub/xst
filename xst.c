@@ -1,5 +1,7 @@
 /* an attempt to keep some xst-only stuff out of the codebase */
 
+int cursorblinkstate = 0;
+
 #define XRESOURCE_LOAD_META(NAME)					\
 	if(!XrmGetResource(xrdb, "st." NAME, "st." NAME, &type, &ret))	\
 		XrmGetResource(xrdb, "*." NAME, "*." NAME, &type, &ret); \
@@ -87,10 +89,10 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("borderless", borderless);
 		XRESOURCE_LOAD_INTEGER("cursorshape", cursorshape);
 
-		/* cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking */
+		cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
-		/* XRESOURCE_LOAD_INTEGER("cursorblinkstyle", cursorblinkstyle); */
-		/* XRESOURCE_LOAD_INTEGER("cursorblinkontype", cursorblinkontype); */
+		XRESOURCE_LOAD_INTEGER("cursorblinkstyle", cursorblinkstyle);
+		XRESOURCE_LOAD_INTEGER("cursorblinkontype", cursorblinkontype);
 
 		XRESOURCE_LOAD_INTEGER("scrollrate", scrollrate);
 

@@ -12,6 +12,14 @@ int disablebold = 0;
 int disableitalic = 0;
 int disableroman = 0;
 
+/* 0: normal blinking
+ * 1: leave cursor border and blink with cursor's background */
+static unsigned int cursorblinkstyle = 0;
+
+/* 0: cursor blinks with a constant interval
+ * 1: blinking cycle resets on key input */
+static unsigned int cursorblinkontype = 1;
+
 /* mouse scroll rate - 0 means 1*/
 int scrollrate = 0;
 
