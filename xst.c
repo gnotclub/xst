@@ -44,7 +44,8 @@ xrdb_load(void)
 
 		/* handling colors here without macros to do via loop. */
 		int i = 0;
-		char loadValue[12] = "";
+		/* this value is also used for keybinds  */
+		char loadValue[100] = "";
 		for (i = 0; i < 256; i++)
 		{
 			sprintf(loadValue, "%s%d", "st.color", i);
@@ -98,6 +99,71 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
+
+		/* note: unsure on speed here, rather than iterating each time,
+		   might be worth it to query like a `st.enable_keybinds` or something
+		*/
+
+		/*
+		  st.bind_alt_{a-z}
+		  st.bind_shift_{a-z}
+		  st.bind_shift_alt_{a-z}
+		  st.bind_ctrl_alt_{a-z}
+		  st.bind_ctrl_shift_{a-z}
+		  all with optional suffix `_withcontent`, for
+		 */
+
+		const char* bind_types[] = {
+			"bind_alt",
+			"bind_shift",
+			"bind_shift_alt",
+			"bind_ctrl_alt",
+			"bind_ctrl_shift",
+		};
+
+		const int bind_masks[] = {
+			Mod1Mask,
+			ShiftMask,
+			(Mod1Mask|ShiftMask),
+			(ControlMask|Mod1Mask),
+			(ControlMask|ShiftMask),
+		};
+
+
+		/* int i = 0; */
+		int xres_shortcut_index = 0;
+		int j = 0;
+		for (i = 0; i < 5; i++)
+		{
+			for (j = 0; j < 26; j++)
+			{
+				char letter = 'a' + j;
+				sprintf(loadValue, "st.kb_%s_%c", bind_types[i], letter);
+
+				if(XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
+					{
+						printf("foundshortcut: %s\n", loadValue);
+						printf("value: %s\n", ret.addr);
+
+						/* todo: Shortcut instance -> xresarray */
+						struct Shortcut bind;
+
+						bind->mod = bind_masks[i];
+						bind->keysym = letter;
+						bind->func = externalpipe;
+						bind->arg = (Arg){.v = "notify-send a"};
+							/* {.i = 0}, */
+
+						xres_shortcuts[xres_shortcut_index++] =
+							/* mask                 keysym          function        argument */
+							bind;
+
+					}
+			}
+
+			if (ret.addr != NULL && !strncmp("String", type, 64))
+				colorname[i] = ret.addr;
+		}
 	}
 	XFlush(dpy);
 }

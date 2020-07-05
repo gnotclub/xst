@@ -30,6 +30,9 @@ static unsigned int borderless = 0;
 /* allow infelicity between the weights: */
 unsigned int max_bold_weight_infelicity = 20;
 
+/* xresources shortcuts -- 100 picked arbitrarily */
+static Shortcut xres_shortcuts[100];
+
 static unsigned int borderpx = 2;
 
 /*

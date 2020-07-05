@@ -1859,6 +1859,13 @@ kpress(XEvent *ev)
 		}
 	}
 
+	for (bp = xres_shortcuts; bp < xres_shortcuts + LEN(xres_shortcuts); bp++) {
+		if (ksym == bp->keysym && match(bp->mod, e->state)) {
+			bp->func(&(bp->arg));
+			return;
+		}
+	}
+
 	/* 2. custom keys from config.h */
 	if ((customkey = kmap(ksym, e->state))) {
 		ttywrite(customkey, strlen(customkey), 1);
