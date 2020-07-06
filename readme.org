@@ -23,6 +23,7 @@
 - [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
 - [[https://st.suckless.org/patches/scrollback/][scrollback]]
 - [[https://st.suckless.org/patches/disable_bold_italic_fonts/][disable bold/italic fonts]]
+- [[https://st.suckless.org/patches/boxdraw/][boxdraw]]
 
 *** Not supported patches
 
