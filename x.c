@@ -816,7 +816,9 @@ xloadcols(void)
 		int scaled_alpha = ((int)(alpha * 255.0));
 		// X11 uses premultiplied alpha values (i.e. 50% opacity white is
 		// 0x7f7f7f7f, not 0x7fffffff), so multiply color by alpha
-		dc.col[defaultbg].color.alpha = (0xffff * alpha) / 0xff; //0xcccc;
+		dc.col[defaultbg].color.alpha = (0xffff * alpha); //0xcccc;
+
+		// @TODO: Make next 3 lines optional by config.h/xrdb:
 		dc.col[defaultbg].color.red   = (dc.col[defaultbg].color.red   * scaled_alpha) / 0xff;
 		dc.col[defaultbg].color.green = (dc.col[defaultbg].color.green * scaled_alpha) / 0xff;
 		dc.col[defaultbg].color.blue  = (dc.col[defaultbg].color.blue  * scaled_alpha) / 0xff;
