@@ -111,6 +111,7 @@ reload(int sig)
 	xloadcols();
 	xunloadfonts();
 	xloadfonts(font, 0);
+	xsetcursor(cursorshape);
 
 	/* pretend the window just got resized */
 	cresize(win.w, win.h);
