@@ -17,16 +17,16 @@
 
 *** Suckless patches
 
-- [[https://st.suckless.org/patches/spoiler/][spoiler]]
+- [[https://st.suckless.org/patches/alpha/][alpha]]
 - [[https://st.suckless.org/patches/clipboard/][clipboard]]
-- [[https://st.suckless.org/patches/externalpipe/][externalpipe]]
-- [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
-- [[https://st.suckless.org/patches/scrollback/][scrollback]]
 - [[https://st.suckless.org/patches/disable_bold_italic_fonts/][disable bold/italic fonts]]
+- [[https://st.suckless.org/patches/externalpipe/][externalpipe]]
+- [[https://st.suckless.org/patches/scrollback/][scrollback]]
+- [[https://st.suckless.org/patches/spoiler/][spoiler]]
+- [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
 
 *** Not supported patches
 
-- [[https://st.suckless.org/patches/alpha/][alpha]]: use a compositor such as picom to make xst windows transparent
 - [[https://st.suckless.org/patches/hidecursor/][hidecursor]]: use unclutter or an external program to hide your cursor
 
 *** Packages
