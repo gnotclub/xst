@@ -812,13 +812,15 @@ xloadcols(void)
 	if (alpha > 1.0)
 		alpha = alpha / 255.0;
 
-	if (alpha != 1.0) {
+	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
+
+	if (disableAlphaCorrection) {
+		dc.col[defaultbg].pixel &= 0x00FFFFFF;
+		dc.col[defaultbg].pixel |= (unsigned char)(0xff * alpha) << 24;
+	} else {
 		int scaled_alpha = ((int)(alpha * 255.0));
 		// X11 uses premultiplied alpha values (i.e. 50% opacity white is
 		// 0x7f7f7f7f, not 0x7fffffff), so multiply color by alpha
-		dc.col[defaultbg].color.alpha = (0xffff * alpha); //0xcccc;
-
-		// @TODO: Make next 3 lines optional by config.h/xrdb:
 		dc.col[defaultbg].color.red   = (dc.col[defaultbg].color.red   * scaled_alpha) / 0xff;
 		dc.col[defaultbg].color.green = (dc.col[defaultbg].color.green * scaled_alpha) / 0xff;
 		dc.col[defaultbg].color.blue  = (dc.col[defaultbg].color.blue  * scaled_alpha) / 0xff;

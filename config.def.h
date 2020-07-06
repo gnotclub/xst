@@ -23,6 +23,8 @@ static unsigned int cursorblinkontype = 1;
 /* mouse scroll rate - 0 means 1*/
 int scrollrate = 0;
 
+int disableAlphaCorrection = 0;
+
 /* borderless hint */
 static unsigned int borderless = 0;
 
