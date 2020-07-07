@@ -814,7 +814,7 @@ xloadcols(void)
 
 	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
 
-	if (disableAlphaCorrection) {
+	if (disable_alpha_correction) {
 		dc.col[defaultbg].pixel &= 0x00FFFFFF;
 		dc.col[defaultbg].pixel |= (unsigned char)(0xff * alpha) << 24;
 	} else {

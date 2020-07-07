@@ -88,7 +88,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
 		XRESOURCE_LOAD_INTEGER("borderless", borderless);
 		XRESOURCE_LOAD_INTEGER("cursorshape", cursorshape);
-		XRESOURCE_LOAD_INTEGER("disableAlphaCorrection", disableAlphaCorrection);
+		XRESOURCE_LOAD_INTEGER("disable_alpha_correction", disable_alpha_correction);
 
 		cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
