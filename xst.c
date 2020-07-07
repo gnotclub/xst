@@ -88,6 +88,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("borderpx", borderpx);
 		XRESOURCE_LOAD_INTEGER("borderless", borderless);
 		XRESOURCE_LOAD_INTEGER("cursorshape", cursorshape);
+		XRESOURCE_LOAD_INTEGER("disableAlphaCorrection", disableAlphaCorrection);
 
 		cursorblinkstate = 1; // in case if cursor shape was changed from a blinking one to a non-blinking
 		XRESOURCE_LOAD_INTEGER("cursorthickness", cursorthickness);
@@ -98,6 +99,7 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
+		XRESOURCE_LOAD_FLOAT("opacity", alpha);
 
 		XRESOURCE_LOAD_INTEGER("boxdraw", boxdraw);
 		XRESOURCE_LOAD_INTEGER("boxdraw_bold", boxdraw_bold);
