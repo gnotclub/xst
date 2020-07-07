@@ -64,7 +64,7 @@ st.opacity:      255
 ! (useful for the systems where composite manager not running all the time,
 ! as color pre-multiplication will make the "opaque" colors look darker/lighter
 ! without the composition)
-st.disableAlphaCorrection: 0
+st.disable_alpha_correction: 0
 
 ! colors -- this is the base16-twilight colorscheme.
 st.foreground:   #a7a7a7
