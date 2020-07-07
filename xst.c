@@ -100,6 +100,10 @@ xrdb_load(void)
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
 
+		XRESOURCE_LOAD_INTEGER("boxdraw", boxdraw);
+		XRESOURCE_LOAD_INTEGER("boxdraw_bold", boxdraw_bold);
+		XRESOURCE_LOAD_INTEGER("boxdraw_braille", boxdraw_braille);
+
 		/* note: unsure on speed here, rather than iterating each time,
 		   might be worth it to query like a `st.enable_keybinds` or something
 		*/
@@ -177,6 +181,7 @@ reload(int sig)
 	xloadcols();
 	xunloadfonts();
 	xloadfonts(font, 0);
+	xsetcursor(cursorshape);
 
 	/* pretend the window just got resized */
 	cresize(win.w, win.h);

@@ -45,6 +45,18 @@ st.blinktimeout:      800
 ! bell volume. Value between -100 and 100. (0 disables)
 st.bellvolume:        100
 
+! 1: render most of the lines/blocks characters without using the font for
+! perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+! Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+! 0: disable (render all U25XX glyphs normally from the font).
+st.boxdraw: 0
+
+! (0|1) boxdraw(bold) enable toggle
+st.boxdraw_bold: 0
+
+! braille (U28XX):  1: render as adjacent "pixels",  0: use font
+st.boxdraw_braille: 0
+
 ! colors -- this is the base16-twilight colorscheme.
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e
