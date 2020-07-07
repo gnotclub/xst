@@ -18,6 +18,7 @@
 *** Suckless patches
 
 - [[https://st.suckless.org/patches/alpha/][alpha]]
+- [[https://st.suckless.org/patches/boxdraw/][boxdraw]]
 - [[https://st.suckless.org/patches/clipboard/][clipboard]]
 - [[https://st.suckless.org/patches/disable_bold_italic_fonts/][disable bold/italic fonts]]
 - [[https://st.suckless.org/patches/externalpipe/][externalpipe]]

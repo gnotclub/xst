@@ -99,6 +99,10 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_FLOAT("cwscale", cwscale);
 		XRESOURCE_LOAD_FLOAT("chscale", chscale);
+
+		XRESOURCE_LOAD_INT("boxdraw", boxdraw);
+		XRESOURCE_LOAD_INT("boxdraw_bold", boxdraw_bold);
+		XRESOURCE_LOAD_INT("boxdraw_braille", boxdraw_braille);
 	}
 	XFlush(dpy);
 }
@@ -112,6 +116,7 @@ reload(int sig)
 	xloadcols();
 	xunloadfonts();
 	xloadfonts(font, 0);
+	xsetcursor(cursorshape);
 
 	/* pretend the window just got resized */
 	cresize(win.w, win.h);
