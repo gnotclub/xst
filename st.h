@@ -136,7 +136,7 @@ extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
-extern const int boxdraw, boxdraw_bold, boxdraw_braille;
+extern int boxdraw, boxdraw_bold, boxdraw_braille;
 extern int scrollrate;
 extern int disablebold;
 extern int disableitalic;
