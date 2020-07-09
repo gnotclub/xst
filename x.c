@@ -2152,7 +2152,7 @@ run:
 	xinit(cols, rows);
 	xsetenv();
 	selinit();
-	reload(0);
+	reload(-1);
 	run();
 
 	return 0;
