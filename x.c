@@ -26,7 +26,7 @@ typedef struct {
 	uint mod;
 	KeySym keysym;
 	void (*func)(const Arg *);
-	const Arg arg;
+	Arg arg;
 } Shortcut;
 
 typedef struct {

@@ -106,10 +106,6 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("boxdraw_bold", boxdraw_bold);
 		XRESOURCE_LOAD_INTEGER("boxdraw_braille", boxdraw_braille);
 
-		/* note: unsure on speed here, rather than iterating each time,
-		   might be worth it to query like a `st.enable_keybinds` or something
-		*/
-
 		/*
 		  st.bind_alt_{a-z}
 		  st.bind_shift_{a-z}
@@ -119,15 +115,15 @@ xrdb_load(void)
 		  all with optional suffix `_withcontent`, for
 		 */
 
-		const char* bind_types[] = {
-			"bind_alt",
-			"bind_shift",
-			"bind_shift_alt",
-			"bind_ctrl_alt",
-			"bind_ctrl_shift",
+		const char* bind_types[5] = {
+			"alt",
+			"shift",
+			"shift_alt",
+			"ctrl_alt",
+			"ctrl_shift",
 		};
 
-		const int bind_masks[] = {
+		const int bind_masks[5] = {
 			Mod1Mask,
 			ShiftMask,
 			(Mod1Mask|ShiftMask),
@@ -145,25 +141,27 @@ xrdb_load(void)
 			{
 				char letter = 'a' + j;
 				sprintf(loadValue, "st.kb_%s_%c", bind_types[i], letter);
+				/* printf("checking: %s\n", loadValue); */
 
 				if(XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
 					{
-						printf("foundshortcut: %s\n", loadValue);
+						printf("found shortcut: %s\n", loadValue);
 						printf("value: %s\n", ret.addr);
 
-						/* todo: Shortcut instance -> xresarray */
-						struct Shortcut bind;
+						/* static char *command[] = { "/bin/sh", "-c", "notify-send heyy" }; */
+						char *command[3] = { "/bin/sh", "-c", ret.addr};
 
-						bind->mod = bind_masks[i];
-						bind->keysym = letter;
-						bind->func = externalpipe;
-						bind->arg = (Arg){.v = "notify-send a"};
-							/* {.i = 0}, */
+						Arg bindarg = {.v = command};
 
-						xres_shortcuts[xres_shortcut_index++] =
-							/* mask                 keysym          function        argument */
-							bind;
+						/* Shortcut bind; */
+						Shortcut bind = {
+							.mod = bind_masks[i],
+							.keysym = letter,
+							.func = externalpipe,
+							.arg = bindarg,
+						};
 
+						xres_shortcuts[xres_shortcut_index++] = bind;
 					}
 			}
 
