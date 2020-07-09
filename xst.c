@@ -119,13 +119,13 @@ reload(int sig)
 	xloadfonts(font, 0);
 	xsetcursor(cursorshape);
 
-	/* pretend the window just got resized */
-	cresize(win.w, win.h);
-
-	redraw();
-
-	/* triggers re-render if we're visible. */
-	ttywrite("\033[O", 3, 1);
+	if (sig != -1) {
+		/* pretend the window just got resized */
+		cresize(win.w, win.h);
+		redraw();
+		/* triggers re-render if we're visible. */
+		ttywrite("\033[O", 3, 1);
+	}
 
 	signal(SIGUSR1, reload);
 }
