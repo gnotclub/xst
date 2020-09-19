@@ -245,7 +245,6 @@ typedef struct {
 static Fontcache *frc = NULL;
 static int frclen = 0;
 static int frccap = 0;
-static char *usedfont = NULL;
 static double usedfontsize = 0;
 static double defaultfontsize = 0;
 
@@ -260,6 +259,12 @@ static char *opt_name  = NULL;
 static char *opt_title = NULL;
 
 static int oldbutton = 3; /* button event on startup: 3 = release */
+
+char*
+getusedfont()
+{
+	return (opt_font == NULL)? font : opt_font;
+}
 
 void
 clipcopy(const Arg *dummy)
@@ -312,7 +317,7 @@ void
 zoomabs(const Arg *arg)
 {
 	xunloadfonts();
-	xloadfonts(usedfont, arg->f);
+	xloadfonts(getusedfont(), arg->f);
 	cresize(0, 0);
 	redraw();
 	xhints();
@@ -1169,8 +1174,7 @@ xinit(int cols, int rows)
 	if (!FcInit())
 		die("could not init fontconfig.\n");
 
-	usedfont = (opt_font == NULL)? font : opt_font;
-	xloadfonts(usedfont, 0);
+	xloadfonts(getusedfont(), 0);
 
 	/* colors */
 	xw.cmap = XCreateColormap(xw.dpy, parent, xw.vis, None);
