@@ -1078,7 +1078,7 @@ kscrolldown(const Arg* a)
 {
 	int n = a->i;
 
-	if (scrollrate)
+	if (scrollrate && (n==1))
 		n = scrollrate;
 
 	if (n < 0)
@@ -1099,7 +1099,7 @@ kscrollup(const Arg* a)
 {
 	int n = a->i;
 
-	if (scrollrate)
+	if (scrollrate && (n==1))
 		n = scrollrate;
 
 	if (n < 0)
