@@ -192,6 +192,7 @@ static int match(uint, uint);
 
 static void run(void);
 static void usage(void);
+static char* getusedfont(void);
 
 static void (*handler[LASTEvent])(XEvent *) = {
 	[KeyPress] = kpress,
