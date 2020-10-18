@@ -1920,7 +1920,6 @@ strhandle(void)
 {
 	char *p = NULL, *dec;
 	int j, narg, par;
-	static int winname = 0;
 
 	term.esc &= ~(ESC_STR_END|ESC_STR);
 	strparse();
