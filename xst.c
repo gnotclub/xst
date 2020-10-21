@@ -116,7 +116,7 @@ reload(int sig)
 	/* colors, fonts */
 	xloadcols();
 	xunloadfonts();
-	xloadfonts(font, 0);
+	xloadfonts(getusedfont(), 0);
 	xsetcursor(cursorshape);
 
 	if (sig != -1) {
