@@ -104,6 +104,8 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("boxdraw", boxdraw);
 		XRESOURCE_LOAD_INTEGER("boxdraw_bold", boxdraw_bold);
 		XRESOURCE_LOAD_INTEGER("boxdraw_braille", boxdraw_braille);
+
+		XRESOURCE_LOAD_INTEGER("depth", opt_depth);
 	}
 	XFlush(dpy);
 }
@@ -111,6 +113,12 @@ xrdb_load(void)
 void
 reload(int sig)
 {
+	signal(SIGUSR1, reload);
+
+	if (sig == -1) {
+		return;
+	}
+
 	xrdb_load();
 
 	/* colors, fonts */
@@ -119,15 +127,11 @@ reload(int sig)
 	xloadfonts(getusedfont(), 0);
 	xsetcursor(cursorshape);
 
-	if (sig != -1) {
-		/* pretend the window just got resized */
-		cresize(win.w, win.h);
-		redraw();
-		/* triggers re-render if we're visible. */
-		ttywrite("\033[O", 3, 1);
-	}
-
-	signal(SIGUSR1, reload);
+	/* pretend the window just got resized */
+	cresize(win.w, win.h);
+	redraw();
+	/* triggers re-render if we're visible. */
+	ttywrite("\033[O", 3, 1);
 }
 
 enum motif_wm {

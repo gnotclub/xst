@@ -57,9 +57,13 @@ st.boxdraw_bold: 0
 ! braille (U28XX):  1: render as adjacent "pixels",  0: use font
 st.boxdraw_braille: 0
 
+! set this to a non-zero value to force window depth
+st.depth: 0
+
 ! opacity==255 means what terminal will be not transparent, 0 - fully transparent
-! (float values in range 0 to 1.0 could be used instead)
+! (float values in range 0 to 1.0 may also be used)
 st.opacity:      255
+
 ! (0|1) don't pre-multiply color values of the pixels when using transparency
 ! (useful for the systems where composite manager not running all the time,
 ! as color pre-multiplication will make the "opaque" colors look darker/lighter
