@@ -1168,6 +1168,10 @@ xinit(int cols, int rows)
 		xw.depth = attr.depth;
 	}
 
+	if (opt_depth) { /* xst option */
+		xw.depth = opt_depth;
+	}
+
 	XMatchVisualInfo(xw.dpy, xw.scr, xw.depth, TrueColor, &vis);
 	xw.vis = vis.visual;
 
@@ -2168,6 +2172,7 @@ run:
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
 	tnew(cols, rows);
+	xrdb_load();
 	xinit(cols, rows);
 	xsetenv();
 	selinit();

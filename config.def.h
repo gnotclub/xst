@@ -106,6 +106,12 @@ int boxdraw_bold = 0;
 int boxdraw_braille = 0;
 
 /*
+ * 0: inherit depth from the root window
+ * <any other value>: set the depth manually
+ */
+int opt_depth = 0;
+
+/*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
