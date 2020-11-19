@@ -32,9 +32,6 @@ static unsigned int borderless = 0;
 /* allow infelicity between the weights: */
 unsigned int max_bold_weight_infelicity = 20;
 
-/* xresources shortcuts -- 100 picked arbitrarily */
-static Shortcut xres_shortcuts[100];
-
 static unsigned int borderpx = 2;
 
 /*
@@ -238,6 +235,11 @@ static MouseShortcut mshortcuts[] = {
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
+
+/* xresources shortcuts -- 100 picked arbitrarily */
+static Shortcut xres_shortcuts[100];
+
+/* static char* xres_shortcuts_commands[100][5] = {}; */
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */

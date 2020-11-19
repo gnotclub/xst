@@ -150,25 +150,26 @@ xrdb_load(void)
 						printf("found shortcut: %s\n", loadValue);
 						printf("value: %s\n", ret.addr);
 
-						/* static char *command[] = { "/bin/sh", "-c", "notify-send heyy" }; */
-						char *command[3] = { "/bin/sh", "-c", ret.addr};
+						/* char *command[5] = { "/bin/sh", "-c", ret.addr, "externalpipe", NULL }; */
 
-						Arg bindarg = {.v = command};
+						/* xres_shortcuts_commands[xres_shortcut_index] = command; */
+							/* { "/bin/sh", "-c", ret.addr, "externalpipe", NULL }; */
+						/* Arg bindarg = {.v = command}; */
+						/* Arg bindarg = {.v = xres_shortcuts_commands[xres_shortcut_index]}; */
 
 						/* Shortcut bind; */
 						Shortcut bind = {
 							.mod = bind_masks[i],
 							.keysym = letter,
 							.func = externalpipe,
-							.arg = bindarg,
+							/* .arg = bindarg, */
+							.arg = {.v = (char *[]){ "/bin/sh", "-c", ret.addr, "externalpipe", NULL }}
+							/* .arg = {.v = command}, */
 						};
 
 						xres_shortcuts[xres_shortcut_index++] = bind;
 					}
 			}
-
-			if (ret.addr != NULL && !strncmp("String", type, 64))
-				colorname[i] = ret.addr;
 		}
 	}
 	XFlush(dpy);

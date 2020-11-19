@@ -1933,6 +1933,7 @@ kpress(XEvent *ev)
 
 	for (bp = xres_shortcuts; bp < xres_shortcuts + LEN(xres_shortcuts); bp++) {
 		if (ksym == bp->keysym && match(bp->mod, e->state)) {
+			printf("hit!\n");
 			bp->func(&(bp->arg));
 			return;
 		}
