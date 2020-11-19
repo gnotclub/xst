@@ -1,6 +1,6 @@
 ** 💊 xst 💊
 
-`xst` is a [[https://st.suckless.org/][st]] fork with some patches applied and other goodies.
+=xst= is a [[https://st.suckless.org/][st]] fork with some patches applied and other goodies.
 
 *** Breaking changes with 0.8.4
 
