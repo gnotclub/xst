@@ -2111,6 +2111,7 @@ main(int argc, char *argv[])
 {
 	xw.l = xw.t = 0;
 	xw.isfixed = False;
+	xrdb_load();
 	xsetcursor(cursorshape);
 
 	ARGBEGIN {
@@ -2172,7 +2173,6 @@ run:
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
 	tnew(cols, rows);
-	xrdb_load();
 	xinit(cols, rows);
 	xsetenv();
 	selinit();
