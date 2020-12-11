@@ -2111,8 +2111,6 @@ main(int argc, char *argv[])
 {
 	xw.l = xw.t = 0;
 	xw.isfixed = False;
-	xrdb_load();
-	xsetcursor(cursorshape);
 
 	ARGBEGIN {
 	case 'a':
@@ -2168,6 +2166,8 @@ run:
 	if (!opt_title)
 		opt_title = (opt_line || !opt_cmd) ? "xst" : opt_cmd[0];
 
+	xrdb_load();
+	xsetcursor(cursorshape);
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
 	cols = MAX(cols, 1);
