@@ -37,6 +37,7 @@
 | Arch Linux (AUR)          | =xst-git=                      |
 | Fedora (COPR)             | =keefle/xst=                   |
 | Gentoo (personal overlay) | https://framagit.org/3/ebuilds |
+| NetBSD                    | =xst=                          |
 | Void Linux                | =xst=                          |
 
 *** Thanks
