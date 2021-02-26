@@ -44,7 +44,8 @@ xrdb_load(void)
 
 		/* handling colors here without macros to do via loop. */
 		int i = 0;
-		char loadValue[12] = "";
+		/* this value is also used for keybinds  */
+		char loadValue[100] = "";
 		for (i = 0; i < 256; i++)
 		{
 			sprintf(loadValue, "%s%d", "st.color", i);
@@ -106,6 +107,70 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("boxdraw_braille", boxdraw_braille);
 
 		XRESOURCE_LOAD_INTEGER("depth", opt_depth);
+
+		/*
+		  st.bind_alt_{a-z}
+		  st.bind_shift_{a-z}
+		  st.bind_shift_alt_{a-z}
+		  st.bind_ctrl_alt_{a-z}
+		  st.bind_ctrl_shift_{a-z}
+		  all with optional suffix `_withcontent`, for
+		 */
+
+		const char* bind_types[5] = {
+			"alt",
+			"shift",
+			"shift_alt",
+			"ctrl_alt",
+			"ctrl_shift",
+		};
+
+		const int bind_masks[5] = {
+			Mod1Mask,
+			ShiftMask,
+			(Mod1Mask|ShiftMask),
+			(ControlMask|Mod1Mask),
+			(ControlMask|ShiftMask),
+		};
+
+
+		/* int i = 0; */
+		int xres_shortcut_index = 0;
+		int j = 0;
+		for (i = 0; i < 5; i++)
+		{
+			for (j = 0; j < 26; j++)
+			{
+				char letter = 'a' + j;
+				sprintf(loadValue, "st.kb_%s_%c", bind_types[i], letter);
+				/* printf("checking: %s\n", loadValue); */
+
+				if(XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
+					{
+						printf("found shortcut: %s\n", loadValue);
+						printf("value: %s\n", ret.addr);
+
+						/* char *command[5] = { "/bin/sh", "-c", ret.addr, "externalpipe", NULL }; */
+
+						/* xres_shortcuts_commands[xres_shortcut_index] = command; */
+							/* { "/bin/sh", "-c", ret.addr, "externalpipe", NULL }; */
+						/* Arg bindarg = {.v = command}; */
+						/* Arg bindarg = {.v = xres_shortcuts_commands[xres_shortcut_index]}; */
+
+						/* Shortcut bind; */
+						Shortcut bind = {
+							.mod = bind_masks[i],
+							.keysym = letter,
+							.func = externalpipe,
+							/* .arg = bindarg, */
+							.arg = {.v = (char *[]){ "/bin/sh", "-c", ret.addr, "externalpipe", NULL }}
+							/* .arg = {.v = command}, */
+						};
+
+						xres_shortcuts[xres_shortcut_index++] = bind;
+					}
+			}
+		}
 	}
 	XFlush(dpy);
 }

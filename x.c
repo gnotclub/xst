@@ -26,7 +26,7 @@ typedef struct {
 	uint mod;
 	KeySym keysym;
 	void (*func)(const Arg *);
-	const Arg arg;
+	Arg arg;
 } Shortcut;
 
 typedef struct {
@@ -1926,6 +1926,14 @@ kpress(XEvent *ev)
 	/* 1. shortcuts */
 	for (bp = shortcuts; bp < shortcuts + LEN(shortcuts); bp++) {
 		if (ksym == bp->keysym && match(bp->mod, e->state)) {
+			bp->func(&(bp->arg));
+			return;
+		}
+	}
+
+	for (bp = xres_shortcuts; bp < xres_shortcuts + LEN(xres_shortcuts); bp++) {
+		if (ksym == bp->keysym && match(bp->mod, e->state)) {
+			printf("hit!\n");
 			bp->func(&(bp->arg));
 			return;
 		}

@@ -2031,6 +2031,8 @@ externalpipe(const Arg *arg)
 		dup2(to[0], STDIN_FILENO);
 		close(to[0]);
 		close(to[1]);
+
+		printf("I'm being called! %s ?\n", ((char **)arg->v)[0]);
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		fprintf(stderr, "st: execvp %s\n", ((char **)arg->v)[0]);
 		perror("failed");
