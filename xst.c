@@ -62,6 +62,24 @@ xrdb_load(void)
 				colorname[i] = ret.addr;
 		}
 
+		XRESOURCE_LOAD_META("font_fallback") {
+			int count = 0, endchar = fonts_count = sizeof(font2) / sizeof(*font2);
+			for (int i = 0; ret.addr[i]; i++) if (ret.addr[i] == ',') count++;
+			if (count > 0)
+			{
+				for (int i = 0; i <= count; i++)
+				{
+					if (i == 0) font2[endchar + i] = strtok(ret.addr, ",");
+					else				font2[endchar + i] = strtok(NULL, ",");
+					fonts_count++;
+				}
+				font2[endchar + count + 1] = '\0';
+			} else if (ret.addr) {
+				font2[endchar] = ret.addr;
+				fonts_count++;
+			}
+		}
+
 		XRESOURCE_LOAD_STRING("foreground", colorname[defaultfg]);
 		XRESOURCE_LOAD_STRING("background", colorname[defaultbg]);
 		XRESOURCE_LOAD_STRING("cursorfg", colorname[defaultcs])
