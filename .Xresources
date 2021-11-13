@@ -11,6 +11,9 @@ st.borderless:        0
 ! --- The following options options can be reloaded via USR1 signal. ---
 st.font:              Liberation Mono:pixelsize=12:antialias=true:autohint=true;
 
+! Font2 fallback, each font can be separated by comma ","
+st.font_fallback:     Fira Code Nerd Font Mono:style=Regular:pixelsize=13:antialias=true,Material\\-Design\\-Iconic\\-Font:style=Design-Iconic-Font:pixelsize=13,JoyPixels:pixelsize=13
+
 ! window padding
 st.borderpx:          10
 
