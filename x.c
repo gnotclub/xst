@@ -1761,7 +1761,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
             int ww = win.cw;//width;
             int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
             int wx = winx;
-            int wy = winy + win.ch - dc.font.descent;
+            int wy = winy + win.cyo + win.ch - dc.font.descent;
 
             // Cap is half of wave width
             float capRatio = 0.5f;
