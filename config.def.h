@@ -537,3 +537,4 @@ static char ascii_printable[] =
  * render method of undercurls
  */
 static unsigned int undercurl_shape = 1;
+static unsigned int undercurl_thickness_threshold = 28;

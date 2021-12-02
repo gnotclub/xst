@@ -125,6 +125,7 @@ xrdb_load(void)
 
 		XRESOURCE_LOAD_INTEGER("depth", opt_depth);
 		XRESOURCE_LOAD_INTEGER("undercurl_shape", undercurl_shape);
+		XRESOURCE_LOAD_INTEGER("undercurl_thickness_threshold", undercurl_thickness_threshold);
 	}
 	XFlush(dpy);
 }

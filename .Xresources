@@ -89,6 +89,8 @@ st.disable_alpha_correction: 0
 ! / \   / \   / \
 !    \_/   \_/
 st.undercurl_shape: 1
+! adds 1 pixel of thickness to the undercurl for every undercurl_thickness_threshold pixels of font size
+st.undercurl_thickness_threshold: 28
 
 ! colors -- this is the base16-twilight colorscheme.
 st.foreground:   #a7a7a7

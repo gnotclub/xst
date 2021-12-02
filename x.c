@@ -1595,7 +1595,7 @@ drawundercurlcurly(GC ugc, int winx, int winy, int wlw, int width, int widthThre
 	int ww = win.cw;//width;
 	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
 	int wx = winx;
-	int wy = winy + win.cyo + win.ch - dc.font.descent;
+	int wy = winy + win.ch - dc.font.descent + win.cyo;
 	// Draw waves
 	int narcs = charlen * 2 + 1;
 	XArc *arcs = xmalloc(sizeof(XArc) * narcs);
@@ -1641,7 +1641,7 @@ drawundercurlspiky(GC ugc, int winx, int winy, int wlw, int width, int widthThre
 	int ww = win.cw;//width;
 	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
 	int wx = winx;
-	int wy = winy + win.ch - dc.font.descent;
+	int wy = winy + win.ch - dc.font.descent + win.cyo;
 	// Make the underline corridor larger
 	/*
 	wy -= wh;
@@ -1750,7 +1750,7 @@ drawundercurlcapped(GC ugc, int winx, int winy, int wlw, int width, int widthThr
 	int ww = win.cw;//width;
 	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
 	int wx = winx;
-	int wy = winy + win.cyo + win.ch - dc.font.descent;
+	int wy = winy + win.cyo + win.ch - dc.font.descent + win.cyo;
 
 	// Cap is half of wave width
 	float capRatio = 0.5f;
@@ -2071,7 +2071,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 			XftDrawRect(xw.draw, fg, winx, winy + win.cyo + dc.font.ascent + 1, width, 1);
 		// Undercurl
 		} else if (base.ustyle == 3) {
-			const int widthThreshold = 28;				// +1 width every widthThreshold px of font
+			const int widthThreshold = undercurl_thickness_threshold;				// +1 width every widthThreshold px of font
 			int wlw = (win.ch / widthThreshold) + 1;	// Wave Line Width
 			XGCValues ugcv = {
 				.foreground = selectlinecolor(base, fg),
