@@ -1756,6 +1756,29 @@ drawundercurls(GC ugc, int winx, int winy, int wlw, int width, int widthThreshol
 	}
 }
 
+int selectlinecolor(Glyph base, Color *fg)
+{
+	if ((base.ucolor[0] >= 0) && !(base.mode & ATTR_BLINK && win.mode & MODE_BLINK) && !(base.mode & ATTR_INVISIBLE)) {
+		// Special color for underline Index
+		if (base.ucolor[1] < 0) {
+			return dc.col[base.ucolor[0]].pixel;
+		}
+		// RGB
+		else {
+			XColor lcolor;
+			lcolor.red = base.ucolor[0] * 257;
+			lcolor.green = base.ucolor[1] * 257;
+			lcolor.blue = base.ucolor[2] * 257;
+			lcolor.flags = DoRed | DoGreen | DoBlue;
+			XAllocColor(xw.dpy, xw.cmap, &lcolor);
+			return lcolor.pixel;
+		}
+	// Underline color
+	} else {
+		return fg->pixel;
+	}
+}
+
 void
 xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, int y)
 {
@@ -1885,40 +1908,17 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
 	}
 
-	/* Render underline/undercurl and strikethrough. */
+	/* Render underline/curl */
 	if (base.mode & ATTR_UNDERLINE) {
-		const int widthThreshold = 28;				// +1 width every widthThreshold px of font
-		int wlw = (win.ch / widthThreshold) + 1;	// Wave Line Width
-		int linecolor;
-		
-		// Undercurl color
-		if ((base.ucolor[0] >= 0) && !(base.mode & ATTR_BLINK && win.mode & MODE_BLINK) && !(base.mode & ATTR_INVISIBLE)) {
-			// Special color for underline Index
-			if (base.ucolor[1] < 0) {
-				linecolor = dc.col[base.ucolor[0]].pixel;
-			}
-			// RGB
-			else {
-				XColor lcolor;
-				lcolor.red = base.ucolor[0] * 257;
-				lcolor.green = base.ucolor[1] * 257;
-				lcolor.blue = base.ucolor[2] * 257;
-				lcolor.flags = DoRed | DoGreen | DoBlue;
-				XAllocColor(xw.dpy, xw.cmap, &lcolor);
-				linecolor = lcolor.pixel;
-			}
-		// Underline color
-		} else {
-			linecolor = fg->pixel;
-		}
-
-		// Underline rendering
+		// Underline
 		if (base.ustyle != 3) {
 			XftDrawRect(xw.draw, fg, winx, winy + win.cyo + dc.font.ascent + 1, width, 1);
-		// Undercurl rendering
+		// Undercurl
 		} else if (base.ustyle == 3) {
+			const int widthThreshold = 28;				// +1 width every widthThreshold px of font
+			int wlw = (win.ch / widthThreshold) + 1;	// Wave Line Width
 			XGCValues ugcv = {
-				.foreground = linecolor,
+				.foreground = selectlinecolor(base, fg),
 				.line_width = wlw,
 				.line_style = LineSolid,
 				.cap_style = CapNotLast
@@ -1929,6 +1929,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		}
 	}
 
+	/* Render strikethrough. */
 	if (base.mode & ATTR_STRUCK) {
 		XftDrawRect(xw.draw, fg, winx, winy + win.cyo + 2 * dc.font.ascent / 3,
  				width, 1);
