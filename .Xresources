@@ -73,6 +73,23 @@ st.opacity:      255
 ! without the composition)
 st.disable_alpha_correction: 0
 
+! undercurl style. either 1, 2 or 3 (0 disables)
+!
+! 0: Curly
+!  _   _   _   _
+! ( ) ( ) ( ) ( )
+!	(_) (_) (_) (_)
+!
+! 1: Spiky
+! /\  /\  /\  /\
+!   \/  \/	\/
+!
+! 2: Capped
+!  _     _     _
+! / \   / \   / \
+!    \_/   \_/
+st.undercurl_shape: 1
+
 ! colors -- this is the base16-twilight colorscheme.
 st.foreground:   #a7a7a7
 st.background:   #1e1e1e

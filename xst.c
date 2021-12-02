@@ -124,6 +124,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("boxdraw_braille", boxdraw_braille);
 
 		XRESOURCE_LOAD_INTEGER("depth", opt_depth);
+		XRESOURCE_LOAD_INTEGER("undercurl_shape", undercurl_shape);
 	}
 	XFlush(dpy);
 }

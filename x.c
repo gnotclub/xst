@@ -2081,9 +2081,20 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 			};
 
 			GC ugc = XCreateGC(xw.dpy, XftDrawDrawable(xw.draw), GCForeground | GCLineWidth | GCLineStyle | GCCapStyle, &ugcv);
-			// drawundercurlcurly(ugc, winx, winy, wlw, width, widthThreshold, charlen);
-			// drawundercurlspiky(ugc, winx, winy, wlw, width, widthThreshold);
-			drawundercurlcapped(ugc, winx, winy, wlw, width, widthThreshold);
+            
+            switch (undercurl_shape) {
+                case 1:
+                    drawundercurlcurly(ugc, winx, winy, wlw, width, widthThreshold, charlen);
+                    break;
+                case 2:
+                    drawundercurlspiky(ugc, winx, winy, wlw, width, widthThreshold);
+                    break;
+                case 3:
+                    drawundercurlcapped(ugc, winx, winy, wlw, width, widthThreshold);
+                    break;
+                default: ;
+            }
+
 			XFreeGC(xw.dpy, ugc);
 		}
 	}
