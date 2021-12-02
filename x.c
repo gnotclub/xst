@@ -1590,7 +1590,162 @@ getslope (int x, int iPoint, int waveWidth)
 }
 
 void
-drawundercurls(GC ugc, int winx, int winy, int wlw, int width, int widthThreshold)
+drawundercurlcurly(GC ugc, int winx, int winy, int wlw, int width, int widthThreshold, int charlen)
+{
+	int ww = win.cw;//width;
+	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
+	int wx = winx;
+	int wy = winy + win.cyo + win.ch - dc.font.descent;
+	// Draw waves
+	int narcs = charlen * 2 + 1;
+	XArc *arcs = xmalloc(sizeof(XArc) * narcs);
+
+	int i = 0;
+	for (i = 0; i < charlen-1; i++) {
+		arcs[i*2] = (XArc) {
+			.x = wx + win.cw * i + ww / 4,
+			.y = wy,
+			.width = win.cw / 2,
+			.height = wh,
+			.angle1 = 0,
+			.angle2 = 180 * 64
+		};
+		arcs[i*2+1] = (XArc) {
+			.x = wx + win.cw * i + ww * 0.75,
+			.y = wy,
+			.width = win.cw/2,
+			.height = wh,
+			.angle1 = 180 * 64,
+			.angle2 = 180 * 64
+		};
+	}
+	// Last wave
+	arcs[i*2] = (XArc) {wx + ww * i + ww / 4, wy, ww / 2, wh,
+		0, 180 * 64 };
+	// Last wave tail
+	arcs[i*2+1] = (XArc) {wx + ww * i + ww * 0.75, wy, ceil(ww / 2.),
+		wh, 180 * 64, 90 * 64};
+	// First wave tail
+	i++;
+	arcs[i*2] = (XArc) {wx - ww/4 - 1, wy, ceil(ww / 2.), wh, 270 * 64,
+		90 * 64 };
+
+	XDrawArcs(xw.dpy, XftDrawDrawable(xw.draw), ugc, arcs, narcs);
+
+	free(arcs);
+}
+
+void
+drawundercurlspiky(GC ugc, int winx, int winy, int wlw, int width, int widthThreshold)
+{
+	int ww = win.cw;//width;
+	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
+	int wx = winx;
+	int wy = winy + win.ch - dc.font.descent;
+	// Make the underline corridor larger
+	/*
+	wy -= wh;
+	*/
+
+	wh *= 2;
+
+	// Set the angle of the slope to 45Â°
+	ww = wh;
+
+	// Position of wave is independent of word, it's absolute
+	wx = (wx / (ww/2)) * (ww/2);
+
+	int marginStart = winx - wx;
+
+	// Calculate number of points with floating precision
+	float n = width;					// Width of word in pixels
+	n = (n / ww) * 2;					// Number of slopes (/ or \)
+	n += 2;								// Add two last points
+	int npoints = n;					// Convert to int
+
+	// Total length of underline
+	float waveLength = 0;
+
+	if (npoints >= 3) {
+		// We add an aditional slot in case we use a bonus point
+		XPoint *points = xmalloc(sizeof(XPoint) * (npoints + 1));
+
+		// First point (Starts with the word bounds)
+		points[0] = (XPoint) {
+			.x = wx + marginStart,
+			.y = (issloperising(wx, 0, ww))
+				? (wy - marginStart + ww/2.f)
+				: (wy + marginStart)
+		};
+
+		// Second point (Goes back to the absolute point coordinates)
+		points[1] = (XPoint) {
+			.x = (ww/2.f) - marginStart,
+			.y = (issloperising(wx, 1, ww))
+				? (ww/2.f - marginStart)
+				: (-ww/2.f + marginStart)
+		};
+		waveLength += (ww/2.f) - marginStart;
+
+		// The rest of the points
+		for (int i = 2; i < npoints-1; i++) {
+			points[i] = (XPoint) {
+				.x = ww/2,
+				.y = (issloperising(wx, i, ww))
+					? wh/2
+					: -wh/2
+			};
+			waveLength += ww/2;
+		}
+
+		// Last point
+		points[npoints-1] = (XPoint) {
+			.x = ww/2,
+			.y = (issloperising(wx, npoints-1, ww))
+				? wh/2
+				: -wh/2
+		};
+		waveLength += ww/2;
+
+		// End
+		if (waveLength < width) { // Add a bonus point?
+			int marginEnd = width - waveLength;
+			points[npoints] = (XPoint) {
+				.x = marginEnd,
+				.y = (issloperising(wx, npoints, ww))
+					? (marginEnd)
+					: (-marginEnd)
+			};
+
+			npoints++;
+		} else if (waveLength > width) { // Is last point too far?
+			int marginEnd = waveLength - width;
+			points[npoints-1].x -= marginEnd;
+			if (issloperising(wx, npoints-1, ww))
+			points[npoints-1].y -= (marginEnd);
+			else
+			points[npoints-1].y += (marginEnd);
+		}
+
+		// Draw the lines
+		XDrawLines(xw.dpy, XftDrawDrawable(xw.draw), ugc, points, npoints,
+		CoordModePrevious);
+
+		// Draw a second underline with an offset of 1 pixel
+		if ( ((win.ch / (widthThreshold/2)) % 2)) {
+			points[0].x++;
+
+			XDrawLines(xw.dpy, XftDrawDrawable(xw.draw), ugc, points,
+			npoints, CoordModePrevious);
+		}
+
+		// Free resources
+		free(points);
+	}
+}
+
+void
+drawundercurlcapped(GC ugc, int winx, int winy, int wlw, int width, int widthThreshold)
 {
 	int ww = win.cw;//width;
 	int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
@@ -1756,7 +1911,8 @@ drawundercurls(GC ugc, int winx, int winy, int wlw, int width, int widthThreshol
 	}
 }
 
-int selectlinecolor(Glyph base, Color *fg)
+int 
+selectlinecolor(Glyph base, Color *fg)
 {
 	if ((base.ucolor[0] >= 0) && !(base.mode & ATTR_BLINK && win.mode & MODE_BLINK) && !(base.mode & ATTR_INVISIBLE)) {
 		// Special color for underline Index
@@ -1923,8 +2079,11 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 				.line_style = LineSolid,
 				.cap_style = CapNotLast
 			};
+
 			GC ugc = XCreateGC(xw.dpy, XftDrawDrawable(xw.draw), GCForeground | GCLineWidth | GCLineStyle | GCCapStyle, &ugcv);
-			drawundercurls(ugc, winx, winy, wlw, width, widthThreshold);
+			// drawundercurlcurly(ugc, winx, winy, wlw, width, widthThreshold, charlen);
+			// drawundercurlspiky(ugc, winx, winy, wlw, width, widthThreshold);
+			drawundercurlcapped(ugc, winx, winy, wlw, width, widthThreshold);
 			XFreeGC(xw.dpy, ugc);
 		}
 	}
