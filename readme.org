@@ -25,6 +25,7 @@
 - [[https://st.suckless.org/patches/scrollback/][scrollback]]
 - [[https://st.suckless.org/patches/spoiler/][spoiler]]
 - [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
+- [[https://st.suckless.org/patches/undercurl/][undercurl]]
 
 *** Not supported patches
 
