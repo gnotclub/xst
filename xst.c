@@ -128,6 +128,7 @@ xrdb_load(void)
 		XRESOURCE_LOAD_INTEGER("undercurl_thickness_threshold", undercurl_thickness_threshold);
 	}
 	XFlush(dpy);
+	XCloseDisplay(dpy);
 }
 
 void
