@@ -852,6 +852,9 @@ xloadcols(void)
 	if (alpha > 1.0)
 		alpha = alpha / 255.0;
 
+	dc.col[defaultbg_reverse] = dc.col[defaultfg];
+	dc.col[defaultfg_reverse] = dc.col[defaultbg];
+
 	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
 
 	if (disable_alpha_correction) {
@@ -869,6 +872,11 @@ xloadcols(void)
 			((((dc.col[defaultbg].pixel & 0x00ff00ff) * scaled_alpha) / 0xff) & 0x00ff00ff) |
 			((((dc.col[defaultbg].pixel & 0x0000ff00) * scaled_alpha) / 0xff) & 0x0000ff00) |
 			scaled_alpha << 24;
+	}
+
+	if (alpha != 0) {
+		dc.col[defaultbg_reverse] = dc.col[defaultfg];
+		dc.col[defaultfg_reverse] = dc.col[defaultbg];
 	}
 
 	loaded = 1;
@@ -2047,14 +2055,8 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	}
 
 	if (base.mode & ATTR_REVERSE) {
-		if (bg == fg) {
-			bg = &dc.col[defaultfg];
-			fg = &dc.col[defaultbg];
-		} else {
-			temp = fg;
-			fg = bg;
-			bg = temp;
-		}
+		bg = &dc.col[defaultbg_reverse];
+		fg = &dc.col[defaultfg_reverse];
 	}
 
 	if (base.mode & ATTR_BLINK && win.mode & MODE_BLINK)
