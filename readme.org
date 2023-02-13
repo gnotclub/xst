@@ -26,10 +26,12 @@
 - [[https://st.suckless.org/patches/spoiler/][spoiler]]
 - [[https://st.suckless.org/patches/vertcenter/][vertcenter]]
 - [[https://st.suckless.org/patches/undercurl/][undercurl]]
+- [[https://st.suckless.org/patches/netwmicon/][netwmicon]]
 
 *** Not supported patches
 
 - [[https://st.suckless.org/patches/hidecursor/][hidecursor]]: use unclutter or an external program to hide your cursor
+- [[https://st.suckless.org/patches/keyboard_select/][keyboard_select]]: use tmux
 
 *** Packages
 
