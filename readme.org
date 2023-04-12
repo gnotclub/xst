@@ -33,13 +33,14 @@
 
 *** Packages
 
-| distro                    | name/details                   |
-| ALT Linux (Sisyphus)      | =xst=                          |
-| Arch Linux (AUR)          | =xst-git=                      |
-| Fedora (COPR)             | =keefle/xst=                   |
-| Gentoo (personal overlay) | https://framagit.org/3/ebuilds |
-| NetBSD                    | =xst=                          |
-| Void Linux                | =xst=                          |
+| distro                    | name/details                                |
+| ALT Linux (Sisyphus)      | =xst=                                       |
+| Arch Linux (AUR)          | =xst-git=                                   |
+| Fedora (COPR)             | =keefle/xst=                                |
+| Gentoo (personal overlay) | https://framagit.org/3/ebuilds              |
+| Guix                      | https://packages.guix.gnu.org/packages/xst/ |
+| NetBSD                    | =xst=                                       |
+| Void Linux                | =xst=                                       |
 
 *** Thanks
 
