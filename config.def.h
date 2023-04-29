@@ -36,7 +36,7 @@ static unsigned int borderless = 0;
 /* allow infelicity between the weights: */
 unsigned int max_bold_weight_infelicity = 20;
 
-static unsigned int borderpx = 2;
+static int borderpx = 2;
 
 /*
  * What program is execed by st depends of these precedence rules:
