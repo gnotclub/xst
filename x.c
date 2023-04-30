@@ -18,6 +18,7 @@
 
 char *argv0;
 #include "arg.h"
+#include "icon.h"
 #include "st.h"
 #include "win.h"
 
@@ -107,7 +108,7 @@ typedef struct {
 	Window win;
 	Drawable buf;
 	GlyphFontSpec *specbuf; /* font spec buffer used for rendering */
-	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmpid;
+	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmicon, netwmpid;
 	struct {
 		XIM xim;
 		XIC xic;
@@ -852,6 +853,9 @@ xloadcols(void)
 	if (alpha > 1.0)
 		alpha = alpha / 255.0;
 
+	dc.col[defaultbg_reverse] = dc.col[defaultfg];
+	dc.col[defaultfg_reverse] = dc.col[defaultbg];
+
 	dc.col[defaultbg].color.alpha = (unsigned short)(0xffff * alpha);
 
 	if (disable_alpha_correction) {
@@ -869,6 +873,11 @@ xloadcols(void)
 			((((dc.col[defaultbg].pixel & 0x00ff00ff) * scaled_alpha) / 0xff) & 0x00ff00ff) |
 			((((dc.col[defaultbg].pixel & 0x0000ff00) * scaled_alpha) / 0xff) & 0x0000ff00) |
 			scaled_alpha << 24;
+	}
+
+	if (alpha != 0) {
+		dc.col[defaultbg_reverse] = dc.col[defaultfg];
+		dc.col[defaultfg_reverse] = dc.col[defaultbg];
 	}
 
 	loaded = 1;
@@ -1394,6 +1403,10 @@ xinit(int cols, int rows)
 	xw.netwmname = XInternAtom(xw.dpy, "_NET_WM_NAME", False);
 	xw.netwmiconname = XInternAtom(xw.dpy, "_NET_WM_ICON_NAME", False);
 	XSetWMProtocols(xw.dpy, xw.win, &xw.wmdeletewin, 1);
+
+	xw.netwmicon = XInternAtom(xw.dpy, "_NET_WM_ICON", False);
+	XChangeProperty(xw.dpy, xw.win, xw.netwmicon, XA_CARDINAL, 32,
+			PropModeReplace, (uchar *)&icon, LEN(icon));
 
 	xw.netwmpid = XInternAtom(xw.dpy, "_NET_WM_PID", False);
 	XChangeProperty(xw.dpy, xw.win, xw.netwmpid, XA_CARDINAL, 32,
@@ -2047,14 +2060,8 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	}
 
 	if (base.mode & ATTR_REVERSE) {
-		if (bg == fg) {
-			bg = &dc.col[defaultfg];
-			fg = &dc.col[defaultbg];
-		} else {
-			temp = fg;
-			fg = bg;
-			bg = temp;
-		}
+		bg = &dc.col[defaultbg_reverse];
+		fg = &dc.col[defaultfg_reverse];
 	}
 
 	if (base.mode & ATTR_BLINK && win.mode & MODE_BLINK)
@@ -2476,7 +2483,7 @@ void
 kpress(XEvent *ev)
 {
 	XKeyEvent *e = &ev->xkey;
-	KeySym ksym;
+	KeySym ksym = NoSymbol;
 	char buf[64], *customkey;
 	int len;
 	Rune c;
@@ -2486,10 +2493,13 @@ kpress(XEvent *ev)
 	if (IS_SET(MODE_KBDLOCK))
 		return;
 
-	if (xw.ime.xic)
+	if (xw.ime.xic) {
 		len = XmbLookupString(xw.ime.xic, e, buf, sizeof buf, &ksym, &status);
-	else
+		if (status == XBufferOverflow)
+			return;
+	} else {
 		len = XLookupString(e, buf, sizeof buf, &ksym, NULL);
+	}
 	/* 1. shortcuts */
 	for (bp = shortcuts; bp < shortcuts + LEN(shortcuts); bp++) {
 		if (ksym == bp->keysym && match(bp->mod, e->state)) {
