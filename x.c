@@ -2060,8 +2060,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	}
 
 	if (base.mode & ATTR_REVERSE) {
-		/*bg = &dc.col[defaultbg_reverse];*/
-		/*fg = &dc.col[defaultfg_reverse];*/
 		if (bg == fg) {
 			bg = &dc.col[defaultfg_reverse];
 			fg = &dc.col[defaultbg_reverse];
