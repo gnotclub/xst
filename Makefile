@@ -49,7 +49,7 @@ install: st
 	sed "s/VERSION/$(VERSION)/g" < st.1 > $(DESTDIR)$(MANPREFIX)/man1/xst.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/xst.1
 	mkdir -p $(DESTDIR)$(PREFIX)/share/terminfo
-	env TERMINFO=$(DESTDIR)$(PREFIX)/share/terminfo tic -sx st.info
+	tic -o $(DESTDIR)$(PREFIX)/share/terminfo -sx st.info
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/xst
