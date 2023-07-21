@@ -47,11 +47,11 @@ xrdb_load(void)
 		char loadValue[12] = "";
 		for (i = 0; i < 256; i++)
 		{
-			sprintf(loadValue, "%s%d", "st.color", i);
+			snprintf(loadValue, sizeof(loadValue), "%s%d", "st.color", i);
 
 			if(!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
 			{
-				sprintf(loadValue, "%s%d", "*.color", i);
+				snprintf(loadValue, sizeof(loadValue), "%s%d", "*.color", i);
 				if (!XrmGetResource(xrdb, loadValue, loadValue, &type, &ret))
 					/* reset if not found (unless in range for defaults). */
 					if (i > 15)
