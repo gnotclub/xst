@@ -7,13 +7,7 @@ include config.mk
 SRC = st.c x.c boxdraw.c
 OBJ = $(SRC:.c=.o)
 
-all: options st
-
-options:
-	@echo st build options:
-	@echo "CFLAGS  = $(STCFLAGS)"
-	@echo "LDFLAGS = $(STLDFLAGS)"
-	@echo "CC      = $(CC)"
+all: st
 
 config.h:
 	cp config.def.h config.h
@@ -62,4 +56,4 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/x/xst-meta-256color
 	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/x/xst-mono
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all clean dist install uninstall
