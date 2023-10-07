@@ -185,6 +185,10 @@ xst-mono| simpleterm monocolor,
 # XTerm extensions
 	rmxx=\E[29m,
 	smxx=\E[9m,
+	BE=\E[?2004h,
+	BD=\E[?2004l,
+	PS=\E[200~,
+	PE=\E[201~,
 # disabled rep for now: causes some issues with older ncurses versions.
 #	rep=%p1%c\E[%p2%{1}%-%db,
 # tmux extensions, see TERMINFO EXTENSIONS in tmux(1)
