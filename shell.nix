@@ -3,6 +3,6 @@ let
 in pkgs.mkShell {
   buildInputs =
     (with pkgs; [
-      stdenv pkgconfig xorg.libX11 ncurses xorg.libXft harfbuzz
+      stdenv pkg-config xorg.libX11 ncurses xorg.libXft harfbuzz
     ]);
 }
