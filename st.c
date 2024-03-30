@@ -91,8 +91,8 @@ enum escape_state {
 
 typedef struct {
 	Glyph attr; /* current char attributes */
-	int x; /* terminal column */
-	int y; /* terminal row */
+	int x;
+	int y;
 	char state;
 } TCursor;
 
@@ -2358,16 +2358,12 @@ tstrsequence(uchar c)
 void
 tcontrolcode(uchar ascii)
 {
-	size_t i;
-
 	switch (ascii) {
 	case '\t':   /* HT */
 		tputtab(1);
 		return;
 	case '\b':   /* BS */
-		for (i = 1; term.c.x && term.line[term.c.y][term.c.x - i].u == 0; ++i)
-			;
-		tmoveto(term.c.x - i, term.c.y);
+		tmoveto(term.c.x-1, term.c.y);
 		return;
 	case '\r':   /* CR */
 		tmoveto(0, term.c.y);
