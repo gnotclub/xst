@@ -337,9 +337,7 @@ zoomabs(const Arg *arg)
 {
 	xunloadfonts();
 	xloadfonts(getusedfont(), arg->f);
-	fonts_count--;
 	xloadsparefonts();
-	fonts_count++;
 	cresize(0, 0);
 	redraw();
 	xhints();
