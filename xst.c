@@ -88,7 +88,7 @@ xrdb_load(void)
 			} else if (ret.addr) {
 				fallback_fonts = realloc(fallback_fonts, (fonts_count + 2) * sizeof(char *));
 				if (!fallback_fonts) {
-					// Handle allocation failure
+					printf("ERROR: can't load fonts from 'st.font_fallback' !\n");
 				}
 
 				fallback_fonts[fonts_count++] = ret.addr;
