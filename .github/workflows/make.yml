@@ -16,7 +16,7 @@ jobs:
     - name: make
       run: make
     - name: make install
-      run: sudo env PREFIX=/usr/ make install
+      run: sudo make PREFIX=/usr/ install
     - name: test deps
       run: sudo apt-get install -y xvfb
     - name: smoke test build
