@@ -21,5 +21,9 @@ jobs:
       run: sudo apt-get install -y xvfb
     - name: smoke test build
       run: xvfb-run ./xst bash -c exit
+    - name: check installed file
+      run: ls -la /usr/bin/xst || true
+    - name: check installed file
+      run: ls -la /usr/local/bin/xst || true
     - name: smoke test install
       run: xvfb-run xst bash -c exit
