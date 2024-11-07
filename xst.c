@@ -63,20 +63,36 @@ xrdb_load(void)
 		}
 
 		XRESOURCE_LOAD_META("font_fallback") {
-			int count = 0, endchar = fonts_count = sizeof(font2) / sizeof(*font2);
-			for (int i = 0; ret.addr[i]; i++) if (ret.addr[i] == ',') count++;
-			if (count > 0)
-			{
-				for (int i = 0; i <= count; i++)
-				{
-					if (i == 0) font2[endchar + i] = strtok(ret.addr, ",");
-					else				font2[endchar + i] = strtok(NULL, ",");
-					fonts_count++;
+			int count = 0;
+			for (int i = 0; ret.addr[i]; i++) {
+				if (ret.addr[i] == ',') count++;
+			}
+
+			if (count > 0) {
+				// Reallocate font2 to fit additional fonts from Xresources
+				font2 = realloc(font2, (fonts_count + count + 2) * sizeof(char *));
+				if (!font2) {
+					printf("ERROR: can't load fonts from 'st.font_fallback' !\n");
 				}
-				font2[endchar + count + 1] = '\0';
+
+				for (int i = 0; i <= count; i++) {
+					if (i == 0)
+						font2[fonts_count + i] = strtok(ret.addr, ",");
+					else
+						font2[fonts_count + i] = strtok(NULL, ",");
+					printf(" :: XRDB: adding fallback font: %s \n", font2[fonts_count + i]);
+				}
+
+				fonts_count += count + 1;
+				font2[fonts_count] = NULL;  // Null-terminate
 			} else if (ret.addr) {
-				font2[endchar] = ret.addr;
-				fonts_count++;
+				font2 = realloc(font2, (fonts_count + 2) * sizeof(char *));
+				if (!font2) {
+					// Handle allocation failure
+				}
+
+				font2[fonts_count++] = ret.addr;
+				font2[fonts_count] = NULL;  // Null-terminate
 			}
 		}
 

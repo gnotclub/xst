@@ -75,7 +75,10 @@ static void ttysend(const Arg *);
 #include "config.h"
 
 /* Calculate count of spare fonts */
-int fonts_count;
+static int fonts_count = 0;
+
+// Declare font2 as a dynamic array
+static char **font2 = NULL;
 
 /* XEMBED messages */
 #define XEMBED_FOCUS_IN  4
@@ -174,6 +177,7 @@ static int xloadcolor(int, const char *, Color *);
 static int xloadfont(Font *, FcPattern *);
 static void xloadfonts(const char *, double);
 static int xloadsparefont(FcPattern *, int);
+static void xinitsparefonts(void);
 static void xloadsparefonts(void);
 static void xunloadfont(Font *);
 static void xunloadfonts(void);
@@ -1150,6 +1154,28 @@ xloadsparefont(FcPattern *pattern, int flags)
 }
 
 void
+xinitsparefonts(void)
+{
+	// Ignore if spare fonts already loaded:
+	if (fonts_count) return;
+
+	// Allocate memory for initial fonts
+	int initial_count = sizeof(default_fallback_fonts) / sizeof(default_fallback_fonts[0]);
+	font2 = malloc((initial_count + 1) * sizeof(char *));
+	if (!font2) {
+		die("Error initializing fallback fonts!\n");
+	}
+
+	// Copy the initial fonts to font2
+	for (int i = 0; i < initial_count; i++) {
+		font2[i] = default_fallback_fonts[i];
+	}
+
+	fonts_count = initial_count;
+	font2[fonts_count] = NULL;  // Null-terminate the array
+}
+
+void
 xloadsparefonts(void)
 {
 	FcPattern *pattern;
@@ -1168,8 +1194,8 @@ xloadsparefonts(void)
 		frc = xrealloc(frc, frccap * sizeof(Fontcache));
 	}
 
-	for (fp = font2; fp - font2 < fonts_count; ++fp) {
-	
+	for (fp = font2; fp < font2 + fonts_count && *fp != NULL; ++fp) {
+
 		if (**fp == '-')
 			pattern = XftXlfdParse(*fp, False, False);
 		else
@@ -1330,6 +1356,7 @@ xinit(int cols, int rows)
 	xloadfonts(getusedfont(), 0);
 
 	/* spare fonts */
+	xinitsparefonts();
 	xloadsparefonts();
 
 	/* colors */
