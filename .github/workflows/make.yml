@@ -22,4 +22,4 @@ jobs:
     - name: smoke test build
       run: xvfb-run ./xst bash -c exit
     - name: smoke test install
-      run: xvfb-run xst bash -c exit
+      run: sync ; sleep 0.1 ; xvfb-run xst bash -c exit
