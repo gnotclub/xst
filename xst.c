@@ -63,20 +63,38 @@ xrdb_load(void)
 		}
 
 		XRESOURCE_LOAD_META("font_fallback") {
-			int count = 0, endchar = fonts_count = sizeof(font2) / sizeof(*font2);
-			for (int i = 0; ret.addr[i]; i++) if (ret.addr[i] == ',') count++;
-			if (count > 0)
-			{
-				for (int i = 0; i <= count; i++)
-				{
-					if (i == 0) font2[endchar + i] = strtok(ret.addr, ",");
-					else				font2[endchar + i] = strtok(NULL, ",");
-					fonts_count++;
+			int count = 0;
+			for (int i = 0; ret.addr[i]; i++) {
+				if (ret.addr[i] == ',') count++;
+			}
+
+			if (count > 0) {
+				// Reallocate fallback_fonts to fit additional fonts from Xresources
+				fallback_fonts = realloc(fallback_fonts, (fonts_count + count + 2) * sizeof(char *));
+				if (!fallback_fonts) {
+					printf("ERROR: can't load fonts from 'st.font_fallback' !\n");
+					return;
 				}
-				font2[endchar + count + 1] = '\0';
+
+				for (int i = 0; i <= count; i++) {
+					if (i == 0)
+						fallback_fonts[fonts_count + i] = strtok(ret.addr, ",");
+					else
+						fallback_fonts[fonts_count + i] = strtok(NULL, ",");
+					printf(" :: XRDB: adding fallback font: %s \n", fallback_fonts[fonts_count + i]);
+				}
+
+				fonts_count += count + 1;
+				fallback_fonts[fonts_count] = NULL;  // Null-terminate
 			} else if (ret.addr) {
-				font2[endchar] = ret.addr;
-				fonts_count++;
+				fallback_fonts = realloc(fallback_fonts, (fonts_count + 2) * sizeof(char *));
+				if (!fallback_fonts) {
+					printf("ERROR: can't load fonts from 'st.font_fallback' !\n");
+					return;
+				}
+
+				fallback_fonts[fonts_count++] = ret.addr;
+				fallback_fonts[fonts_count] = NULL;  // Null-terminate
 			}
 		}
 
@@ -139,6 +157,7 @@ reload(int sig)
 	if (sig == -1) {
 		return;
 	}
+	printf(" :: XST:: reloading config...\n");
 
 	xrdb_load();
 
@@ -146,11 +165,14 @@ reload(int sig)
 	xloadcols();
 	xunloadfonts();
 	xloadfonts(getusedfont(), 0);
+	xinitsparefonts();
+	xloadsparefonts();
 	xsetcursor(cursorshape);
 
 	/* pretend the window just got resized */
 	cresize(win.w, win.h);
 	redraw();
+	xhints();
 	/* triggers re-render if we're visible. */
 	ttywrite("\033[O", 3, 1);
 }

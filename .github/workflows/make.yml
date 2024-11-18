@@ -16,10 +16,10 @@ jobs:
     - name: make
       run: make
     - name: make install
-      run: sudo env PREFIX=/usr/ make install
+      run: sudo make PREFIX=/usr/ install
     - name: test deps
       run: sudo apt-get install -y xvfb
     - name: smoke test build
       run: xvfb-run ./xst bash -c exit
     - name: smoke test install
-      run: xvfb-run xst bash -c exit
+      run: sync ; sleep 0.1 ; xvfb-run xst bash -c exit
