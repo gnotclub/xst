@@ -157,6 +157,7 @@ reload(int sig)
 	if (sig == -1) {
 		return;
 	}
+	printf(" :: XST:: reloading config...\n");
 
 	xrdb_load();
 
@@ -164,11 +165,14 @@ reload(int sig)
 	xloadcols();
 	xunloadfonts();
 	xloadfonts(getusedfont(), 0);
+	xinitsparefonts();
+	xloadsparefonts();
 	xsetcursor(cursorshape);
 
 	/* pretend the window just got resized */
 	cresize(win.w, win.h);
 	redraw();
+	xhints();
 	/* triggers re-render if we're visible. */
 	ttywrite("\033[O", 3, 1);
 }
