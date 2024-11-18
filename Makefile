@@ -1,4 +1,4 @@
-# st - simple terminal
+# xst - xresources simple terminal
 # See LICENSE file for copyright and license details.
 .POSIX:
 
@@ -7,7 +7,7 @@ include config.mk
 SRC = st.c x.c boxdraw.c
 OBJ = $(SRC:.c=.o)
 
-all: st
+all: xst
 
 config.h:
 	cp config.def.h config.h
@@ -21,21 +21,21 @@ boxdraw.o: config.h st.h boxdraw_data.h
 
 $(OBJ): config.h config.mk
 
-st: $(OBJ)
+xst: $(OBJ)
 	$(CC) -o xst $(OBJ) $(STLDFLAGS)
 
 clean:
-	rm -f xst config.h $(OBJ) st-$(VERSION).tar.gz
+	rm -f xst config.h $(OBJ) xst-$(VERSION).tar.gz
 
 dist: clean
-	mkdir -p st-$(VERSION)
+	mkdir -p xst-$(VERSION)
 	cp -R FAQ LEGACY TODO LICENSE Makefile README config.mk\
 		config.def.h st.info st.1 arg.h st.h win.h $(SRC)\
-		st-$(VERSION)
-	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
-	rm -rf st-$(VERSION)
+		xst-$(VERSION)
+	tar -cf - xst-$(VERSION) | gzip > xst-$(VERSION).tar.gz
+	rm -rf xst-$(VERSION)
 
-install: st
+install: xst
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f xst $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/xst
